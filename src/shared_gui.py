@@ -17,7 +17,6 @@
 import tkinter
 from tkinter import ttk
 import time
-import m2_run_this_on_robot
 
 
 def get_teleoperation_frame(window, mqtt_sender):
@@ -93,14 +92,8 @@ def get_arm_frame(window, mqtt_sender):
     position_entry = ttk.Entry(frame, width=8)
 
     raise_arm_button = ttk.Button(frame, text="Raise arm")
-    #raise_arm_button['command'] = lambda: print('Raise Arm')
-    #raise_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_arm_raise()
     lower_arm_button = ttk.Button(frame, text="Lower arm")
-    #lower_arm_button['command'] = lambda: print('Lower Arm')
-    #lower_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_arm_lower()
     calibrate_arm_button = ttk.Button(frame, text="Calibrate arm")
-    #calibrate_arm_button['command'] = lambda: print('Calibrate arm')
-    #calibrate_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_calibrate_arm()
     move_arm_button = ttk.Button(frame,
                                  text="Move arm to position (0 to 5112)")
     blank_label = ttk.Label(frame, text="")
@@ -172,6 +165,8 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
+    print('forward', left_entry_box.get(), right_entry_box.get())
+    mqtt_sender.send_message('forward', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     """
@@ -182,6 +177,9 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
+    print('backward', left_entry_box.get(), right_entry_box.get())
+    mqtt_sender.send_message('backward', [left_entry_box.get(), right_entry_box.get()])
+
 def handle_left(left_entry_box, right_entry_box, mqtt_sender):
     """
     Tells the robot to move using the speeds in the given entry boxes,
@@ -191,6 +189,8 @@ def handle_left(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
+    print('left', left_entry_box.get(), right_entry_box.get())
+    mqtt_sender.send_message('left', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_right(left_entry_box, right_entry_box, mqtt_sender):
     """
@@ -201,6 +201,8 @@ def handle_right(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
+    print('right', left_entry_box.get(), right_entry_box.get())
+    mqtt_sender.send_message('right', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_stop(mqtt_sender):
     """
