@@ -180,7 +180,7 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     print('backward', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('backward', [left_entry_box.get(), right_entry_box.get()])
 
-def handle_left(left_entry_box, right_entry_box, mqtt_sender):
+def handle_left(left_entry_box, mqtt_sender):
     """
     Tells the robot to move using the speeds in the given entry boxes,
     but using the negative of the speed in the left entry box.
@@ -189,10 +189,10 @@ def handle_left(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('left', left_entry_box.get(), right_entry_box.get())
-    mqtt_sender.send_message('left', [left_entry_box.get(), right_entry_box.get()])
+    print('left', left_entry_box.get())
+    mqtt_sender.send_message('left', [left_entry_box.get()])
 
-def handle_right(left_entry_box, right_entry_box, mqtt_sender):
+def handle_right(right_entry_box, mqtt_sender):
     """
     Tells the robot to move using the speeds in the given entry boxes,
     but using the negative of the speed in the right entry box.
@@ -201,8 +201,8 @@ def handle_right(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('right', left_entry_box.get(), right_entry_box.get())
-    mqtt_sender.send_message('right', [left_entry_box.get(), right_entry_box.get()])
+    print('right', right_entry_box.get())
+    mqtt_sender.send_message('right', [right_entry_box.get()])
 
 def handle_stop(mqtt_sender):
     """
@@ -210,7 +210,7 @@ def handle_stop(mqtt_sender):
       :type  mqtt_sender:  com.MqttClient
     """
     print('stop')
-    mqtt_sender.send_message('stop')
+    mqtt_sender.send_message('stop', [])
 
 
 ###############################################################################
