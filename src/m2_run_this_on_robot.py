@@ -26,6 +26,10 @@ def run_test_arm_raise():
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.calibrate_arm()
 
+def run_test_calibrate_arm():
+
+    robot.arm_and_claw.calibrate_arm()
+
 def run_test_arm_lower():
 
     robot.arm_and_claw.lower_arm()

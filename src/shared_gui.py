@@ -17,6 +17,7 @@
 import tkinter
 from tkinter import ttk
 import time
+import m2_run_this_on_robot
 
 
 def get_teleoperation_frame(window, mqtt_sender):
@@ -92,8 +93,14 @@ def get_arm_frame(window, mqtt_sender):
     position_entry = ttk.Entry(frame, width=8)
 
     raise_arm_button = ttk.Button(frame, text="Raise arm")
+    #raise_arm_button['command'] = lambda: print('Raise Arm')
+    #raise_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_arm_raise()
     lower_arm_button = ttk.Button(frame, text="Lower arm")
+    #lower_arm_button['command'] = lambda: print('Lower Arm')
+    #lower_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_arm_lower()
     calibrate_arm_button = ttk.Button(frame, text="Calibrate arm")
+    #calibrate_arm_button['command'] = lambda: print('Calibrate arm')
+    #calibrate_arm_button['command'] = lambda: m2_run_this_on_robot.run_test_calibrate_arm()
     move_arm_button = ttk.Button(frame,
                                  text="Move arm to position (0 to 5112)")
     blank_label = ttk.Label(frame, text="")
