@@ -18,8 +18,8 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
 
-    #run_test_arm_raise()
     run_test_arm_raise()
+    run_test_arm_lower()
 
 def run_test_arm_raise():
 
