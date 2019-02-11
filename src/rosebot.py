@@ -432,6 +432,7 @@ class Beeper(object):
     def beep(self):
         # DCM: Indicate that this is NON-blocking.
         # DCM: Indicate that returns a subprocess.Popen, which has a WAIT method
+
         return self._beeper.beep()
 
 
@@ -442,6 +443,7 @@ class ToneMaker(object):
     def tone(self, frequency, duration):
         # DCM: Indicate that this is NON-blocking.
         # DCM: Indicate that returns a subprocess.Popen, which has a WAIT method
+
         return self._tone_maker.tone(frequency, duration)  # MHz, msec  DCM XXX CTO
 
 
