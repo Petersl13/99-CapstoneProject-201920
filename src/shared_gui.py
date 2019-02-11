@@ -223,8 +223,8 @@ def handle_stop(mqtt_sender):
 
 def handle_beep(mqtt_sender, beep_entry):
 
-    print('beep')
-    mqtt_sender.send_message('beep', [beep_entry])
+    print('beep', int(beep_entry.get()))
+    mqtt_sender.send_message('beep', [beep_entry.get()])
 
 
 ###############################################################################
