@@ -24,13 +24,13 @@ class Handler(object):
 
     def left(self, left_wheel_speed):
         print('got left', left_wheel_speed)
-
+        self.robot.left_motor.turn_on()
         self.robot.drive_system.go(int(left_wheel_speed), 0)
 
 
     def right(self, right_wheel_speed):
         print('got right', right_wheel_speed)
-
+        self.robot.right_motor.turn_on()
         self.robot.drive_system.go(0, int(right_wheel_speed))
 
 
