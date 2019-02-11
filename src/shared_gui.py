@@ -41,11 +41,15 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_speed_entry = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
     right_speed_entry.insert(0, "100")
 
+    beep_entry = ttk.Entry(frame, width=8)
+    beep_label = ttk.Label(frame, text='Number of Beeps:')
+
     forward_button = ttk.Button(frame, text="Forward")
     backward_button = ttk.Button(frame, text="Backward")
     left_button = ttk.Button(frame, text="Left")
     right_button = ttk.Button(frame, text="Right")
     stop_button = ttk.Button(frame, text="Stop")
+    beep_button = ttk.Button(frame, text="Beep")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
@@ -60,6 +64,10 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button.grid(row=4, column=2)
     backward_button.grid(row=5, column=1)
 
+    beep_button.grid(row=7, column=1)
+    beep_entry.grid(row=7, column=0)
+    beep_label.grid(row=6, column=0)
+
     # Set the button callbacks:
     forward_button["command"] = lambda: handle_forward(
         left_speed_entry, right_speed_entry, mqtt_sender)
@@ -70,6 +78,7 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button["command"] = lambda: handle_right(
         left_speed_entry, right_speed_entry, mqtt_sender)
     stop_button["command"] = lambda: handle_stop(mqtt_sender)
+    beep_button["command"] = lambda: handle_beep(mqtt_sender, beep_entry)
 
     return frame
 
@@ -211,6 +220,11 @@ def handle_stop(mqtt_sender):
     """
     print('stop')
     mqtt_sender.send_message('stop', [])
+
+def handle_beep(mqtt_sender, beep_entry):
+
+    print('beep')
+    mqtt_sender.send_message('beep', [beep_entry])
 
 
 ###############################################################################
