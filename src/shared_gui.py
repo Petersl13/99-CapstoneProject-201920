@@ -46,7 +46,6 @@ def get_teleoperation_frame(window, mqtt_sender):
     left_button = ttk.Button(frame, text="Left")
     right_button = ttk.Button(frame, text="Right")
     stop_button = ttk.Button(frame, text="Stop")
-    quit_button = ttk.Button(frame, text="Quit")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
@@ -60,7 +59,6 @@ def get_teleoperation_frame(window, mqtt_sender):
     stop_button.grid(row=4, column=1)
     right_button.grid(row=4, column=2)
     backward_button.grid(row=5, column=1)
-    quit_button.grid(row=6, column=2)
 
     # Set the button callbacks:
     forward_button["command"] = lambda: handle_forward(
@@ -72,7 +70,6 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button["command"] = lambda: handle_right(
         left_speed_entry, right_speed_entry, mqtt_sender)
     stop_button["command"] = lambda: handle_stop(mqtt_sender)
-    quit_button["command"] = lambda: handle_quit(mqtt_sender)
 
     return frame
 
@@ -215,10 +212,6 @@ def handle_stop(mqtt_sender):
     print('stop')
     mqtt_sender.send_message('stop', [])
 
-def handle_quit(mqtt_sender):
-    print('quit')
-    mqtt_sender.send_message('quit', [])
-
 
 ###############################################################################
 # Handlers for Buttons in the ArmAndClaw frame.
@@ -263,7 +256,8 @@ def handle_quit(mqtt_sender):
     Tell the robot's program to stop its loop (and hence quit).
       :type  mqtt_sender:  com.MqttClient
     """
-
+    print('quit')
+    mqtt_sender.send_message('quit')
 
 def handle_exit(mqtt_sender):
     """
@@ -271,3 +265,6 @@ def handle_exit(mqtt_sender):
     Then exit this program.
       :type mqtt_sender: com.MqttClient
     """
+    print('exit')
+    handle_quit(mqtt_sender)
+    exit()
