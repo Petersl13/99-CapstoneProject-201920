@@ -32,8 +32,7 @@ class Handler(object):
         self.robot.drive_system.go(int(right_wheel_speed))
 
 
+
     def stop(self):
-        self.robot.left_wheel_motor.turn_off()
-        self.robot.right_wheel_motor.turn_off()
-        self.robot.motor.turn_off()
+        self.robot.drive_system.stop()
 
