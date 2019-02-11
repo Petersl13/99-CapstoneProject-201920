@@ -47,6 +47,19 @@ class Handler(object):
 
 
 
+    def beep(self, n):
+        print('got beep')
+        for k in range(n+1):
+            self.robot.sound_system.beeper.beep().wait()
+
+    def tone(self, f, t):
+        print('got tone')
+        self.robot.sound_system.tone_maker.tone(f, t).wait()
+
+    def phrase(self, p):
+        print('got phrase')
+        self.robot.sound_system.speech_maker.speak(p).wait()
+
 
     print("I will beep N times")
     print('I will play tone at frequency F for the durration T')
