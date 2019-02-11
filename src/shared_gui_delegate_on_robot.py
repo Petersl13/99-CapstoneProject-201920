@@ -45,7 +45,7 @@ class Handler(object):
         print('got quit')
         self.is_time_to_stop = True
 
-    
+
 
 
     print("I will beep N times")
