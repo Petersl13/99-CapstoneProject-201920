@@ -12,6 +12,7 @@ class Handler(object):
         :type robot: rosebot.Rosebot
         """
         self.robot = robot
+        self.is_time_to_stop = False
 
     def forward(self, left_wheel_speed, right_wheel_speed):
         print('got forward', left_wheel_speed, right_wheel_speed)
@@ -38,6 +39,13 @@ class Handler(object):
 
     def stop(self):
         self.robot.drive_system.stop()
+
+
+    def quit(self):
+        print('got quit')
+        self.is_time_to_stop = True
+
+    
 
 
     print("I will beep N times")
