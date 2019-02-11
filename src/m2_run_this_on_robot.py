@@ -44,7 +44,8 @@ def run_test_arm_lower():
 def run_test_go():
 
     robot.drive_system.go(left_wheel_speed=100, right_wheel_speed=100)
-    robot.drive_system.go_straight_for_seconds(5, 100)
+    robot.drive_system.stop()
+    robot.drive_system.go_straight_for_seconds(5, 50)
     robot.drive_system.go_straight_for_inches_using_time(10, 100)
 
 # -----------------------------------------------------------------------------
