@@ -60,6 +60,7 @@ def get_teleoperation_frame(window, mqtt_sender):
     stop_button.grid(row=4, column=1)
     right_button.grid(row=4, column=2)
     backward_button.grid(row=5, column=1)
+    quit_button.grid(row=6, column=2)
 
     # Set the button callbacks:
     forward_button["command"] = lambda: handle_forward(
