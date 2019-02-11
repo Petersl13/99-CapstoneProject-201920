@@ -60,6 +60,13 @@ class Handler(object):
         print('got phrase')
         self.robot.sound_system.speech_maker.speak(p).wait()
 
+    def go_striaght_for_seconds(self, seconds):
+        print('got striaght for seconds')
+        self.robot.drive_system.go_straight_for_seconds(seconds)
+
+    def go_straight_for_inches(self, inches):
+        print('got straight for inches')
+        self.robot.drive_system.go_straight_for_inches(inches)
 
     print("I will beep N times")
     print('I will play tone at frequency F for the durration T')

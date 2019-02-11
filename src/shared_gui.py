@@ -43,10 +43,6 @@ def get_teleoperation_frame(window, mqtt_sender):
 
     beep_entry = ttk.Entry(frame, width=8)
     beep_label = ttk.Label(frame, text='Number of Beeps:')
-    tone_entry = ttk.Entry(frame, width=8)
-    tone_label = ttk.Label(frame, text='Tone Frequency:')
-    tone_entry2 = ttk.Entry(frame, width=8)
-    tone_label2 = ttk.Label(frame, text='Tone Duration (milliseconds):')
 
     forward_button = ttk.Button(frame, text="Forward")
     backward_button = ttk.Button(frame, text="Backward")
@@ -54,7 +50,6 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button = ttk.Button(frame, text="Right")
     stop_button = ttk.Button(frame, text="Stop")
     beep_button = ttk.Button(frame, text="Beep")
-    tone_button = ttk.Button(frame, text="Tone")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
@@ -72,11 +67,6 @@ def get_teleoperation_frame(window, mqtt_sender):
     beep_button.grid(row=7, column=1)
     beep_entry.grid(row=7, column=0)
     beep_label.grid(row=6, column=0)
-    tone_button.grid(row=9, column=2)
-    tone_entry.grid(row=9, column=0)
-    tone_label.grid(row=8, column=0)
-    tone_entry2.grid(row=9, column=1)
-    tone_label2.grid(row=8, column=1)
 
     # Set the button callbacks:
     forward_button["command"] = lambda: handle_forward(
@@ -89,9 +79,28 @@ def get_teleoperation_frame(window, mqtt_sender):
         left_speed_entry, right_speed_entry, mqtt_sender)
     stop_button["command"] = lambda: handle_stop(mqtt_sender)
     beep_button["command"] = lambda: handle_beep(mqtt_sender, beep_entry)
-    tone_button["command"] = lambda: handle_tone(mqtt_sender, tone_entry, tone_entry2)
 
     return frame
+
+def go_straight_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, releif='ridge')
+    frame.grid()
+    frame_label = ttk.Label(frame, text='Go Straight For...')
+    time_label = ttk.Label(frame, text='Time in Seconds')
+    time_entry = ttk.Entry(frame, width=8)
+    inches_label = ttk.Label(frame, text='Inches')
+    inches_entry = ttk.Entry(frame, width=8)
+    frame_label.grid(row = 0, column = 1)
+    time_label.grid(row=1, column = 0)
+    time_entry.grid(row=2, column = 0)
+    inches_label.grid(row= 1, column= 1)
+    inches_entry.grid(row= 2, column = 1)
+    time_entry_button = ttk.Button(frame, text='time')
+    time_entry_button.grid(row=3, column=0)
+    inches_entry_button = ttk.Button(frame, text="inches")
+    inches_entry_button.grid(row= 3, column=1)
+    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(seconds, mqtt_sender)
+    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender,inches)
 
 
 def get_arm_frame(window, mqtt_sender):
@@ -234,13 +243,17 @@ def handle_stop(mqtt_sender):
 
 def handle_beep(mqtt_sender, beep_entry):
 
-    print('beep', int(beep_entry.get()))
-    mqtt_sender.send_message('beep', [beep_entry.get()])
+    print('beep')
+    mqtt_sender.send_message('beep', [beep_entry])
 
-def handle_tone(mqtt_sender, tone_entry, tone_entry2):
+def handle_go_straight_for_seconds(mqtt_sender, time_entry):
+    print('go straight for seconds')
+    mqtt_sender.send_message('go_straight_for_seconds', [int(time_entry.get())])
 
-    print('tone', int(tone_entry.get()), int(tone_entry2.get()))
-    mqtt_sender.send_message('tone', [int(tone_entry.get()), int(tone_entry2.get())])
+def handle_go_straight_for_inches(mqtt_sender, inches_entry):
+    print('go straight for inches')
+    mqtt_sender.send_message('go_straight_for_inches', [int(inches_entry.get())])
+
 
 ###############################################################################
 # Handlers for Buttons in the ArmAndClaw frame.
