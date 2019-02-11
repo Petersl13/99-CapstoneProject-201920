@@ -29,7 +29,7 @@ class Handler(object):
 
     def right(self, right_wheel_speed):
         print('got right', right_wheel_speed)
-        self.robot.drive_system.go( int(right_wheel_speed))
+        self.robot.drive_system.go(int(right_wheel_speed))
 
 
 
