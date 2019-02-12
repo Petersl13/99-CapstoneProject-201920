@@ -93,7 +93,7 @@ def get_teleoperation_frame(window, mqtt_sender):
 
     return frame
 
-def go_straight_frame(window, mqtt_sender):
+def get_go_straight_frame(window, mqtt_sender):
     frame = ttk.Frame(window, padding=10, borderwidth=5, releif='ridge')
     frame.grid()
     frame_label = ttk.Label(frame, text='Go Straight For...')
