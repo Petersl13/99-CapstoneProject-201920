@@ -9,6 +9,7 @@ import rosebot
 import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot
+import shared_gui
 
 robot = rosebot.RoseBot()
 
@@ -21,7 +22,6 @@ def main():
     real_thing()
     #run_test_arm_raise()
     #run_test_arm_lower()
-    #run_test_go()
 
 def real_thing():
 
@@ -42,13 +42,6 @@ def run_test_arm_raise():
 def run_test_arm_lower():
 
     robot.arm_and_claw.lower_arm()
-
-def run_test_go():
-
-    robot.drive_system.go(left_wheel_speed=100, right_wheel_speed=100)
-    robot.drive_system.stop()
-    robot.drive_system.go_straight_for_seconds(5, 50)
-    robot.drive_system.go_straight_for_inches_using_time(10, 100)
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

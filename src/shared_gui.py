@@ -41,20 +41,11 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_speed_entry = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
     right_speed_entry.insert(0, "100")
 
-    beep_entry = ttk.Entry(frame, width=8)
-    beep_label = ttk.Label(frame, text='Number of Beeps:')
-    tone_entry = ttk.Entry(frame, width=8)
-    tone_label = ttk.Label(frame, text='Tone Frequency:')
-    tone_entry2 = ttk.Entry(frame, width=8)
-    tone_label2 = ttk.Label(frame, text='Tone Duration (milliseconds):')
-
     forward_button = ttk.Button(frame, text="Forward")
     backward_button = ttk.Button(frame, text="Backward")
     left_button = ttk.Button(frame, text="Left")
     right_button = ttk.Button(frame, text="Right")
     stop_button = ttk.Button(frame, text="Stop")
-    beep_button = ttk.Button(frame, text="Beep")
-    tone_button = ttk.Button(frame, text="Tone")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
@@ -69,50 +60,50 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button.grid(row=4, column=2)
     backward_button.grid(row=5, column=1)
 
-    beep_button.grid(row=7, column=1)
-    beep_entry.grid(row=7, column=0)
-    beep_label.grid(row=6, column=0)
-    tone_button.grid(row=9, column=2)
-    tone_entry.grid(row=9, column=0)
-    tone_label.grid(row=8, column=0)
-    tone_entry2.grid(row=9, column=1)
-    tone_label2.grid(row=8, column=1)
 
     # Set the button callbacks:
     forward_button["command"] = lambda: handle_forward(
         left_speed_entry, right_speed_entry, mqtt_sender)
     backward_button["command"] = lambda: handle_backward(
         left_speed_entry, right_speed_entry, mqtt_sender)
-    left_button["command"] = lambda: handle_left(
-        left_speed_entry, right_speed_entry, mqtt_sender)
-    right_button["command"] = lambda: handle_right(
-        left_speed_entry, right_speed_entry, mqtt_sender)
+    left_button["command"] = lambda: handle_left(mqtt_sender,
+        left_speed_entry, right_speed_entry)
+    right_button["command"] = lambda: handle_right(mqtt_sender,
+        left_speed_entry, right_speed_entry)
     stop_button["command"] = lambda: handle_stop(mqtt_sender)
-    beep_button["command"] = lambda: handle_beep(mqtt_sender, beep_entry)
-    tone_button["command"] = lambda: handle_tone(mqtt_sender, tone_entry, tone_entry2)
 
     return frame
 
 def get_go_straight_frame(window, mqtt_sender):
-    frame = ttk.Frame(window, padding=10, borderwidth=5, releif='ridge')
+
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief='ridge')
     frame.grid()
     frame_label = ttk.Label(frame, text='Go Straight For...')
+
     time_label = ttk.Label(frame, text='Time in Seconds')
     time_entry = ttk.Entry(frame, width=8)
+
     inches_label = ttk.Label(frame, text='Inches')
     inches_entry = ttk.Entry(frame, width=8)
-    frame_label.grid(row = 0, column = 1)
+
+    frame_label.grid(row = 0, column = 0)
+
     time_label.grid(row=1, column = 0)
     time_entry.grid(row=2, column = 0)
+
     inches_label.grid(row= 1, column= 1)
     inches_entry.grid(row= 2, column = 1)
+
     time_entry_button = ttk.Button(frame, text='time')
     time_entry_button.grid(row=3, column=0)
+
     inches_entry_button = ttk.Button(frame, text="inches")
     inches_entry_button.grid(row= 3, column=1)
-    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(seconds, mqtt_sender)
-    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender,inches)
 
+    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry.get())
+    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry.get())
+
+    return frame
 
 def get_arm_frame(window, mqtt_sender):
     """
@@ -123,7 +114,7 @@ def get_arm_frame(window, mqtt_sender):
       :type  mqtt_sender:  com.MqttClient
     """
     # Construct the frame to return:
-    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief='ridge')
     frame.grid()
 
     # Construct the widgets on the frame:
@@ -186,6 +177,44 @@ def get_control_frame(window, mqtt_sender):
 
     return frame
 
+def beep_frame(window, mqtt_sender):
+    """
+        Constructs and returns a frame on the given window, where the frame has
+        Button objects to exit this program and/or the robot's program (via MQTT).
+          :type  window:       ttk.Frame | ttk.Toplevel
+          :type  mqtt_sender:  com.MqttClient
+        """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+    frame_label = ttk.Label(frame, text="Beeps")
+    frame_label.grid(row=0, column=1)
+
+    beep_entry = ttk.Entry(frame, width=8)
+    beep_label = ttk.Label(frame, text='Number of Beeps:')
+    tone_entry = ttk.Entry(frame, width=8)
+    tone_label = ttk.Label(frame, text='Tone Frequency:')
+    tone_entry2 = ttk.Entry(frame, width=8)
+    tone_label2 = ttk.Label(frame, text='Tone Duration (milliseconds):')
+
+    beep_button = ttk.Button(frame, text="Beep")
+    tone_button = ttk.Button(frame, text="Tone")
+
+    beep_button.grid(row=2, column=1)
+    beep_entry.grid(row=2, column=0)
+    beep_label.grid(row=1, column=0)
+    tone_button.grid(row=4, column=2)
+    tone_entry.grid(row=4, column=0)
+    tone_label.grid(row=3, column=0)
+    tone_entry2.grid(row=4, column=1)
+    tone_label2.grid(row=3, column=1)
+
+    beep_button["command"] = lambda: handle_beep(mqtt_sender, beep_entry)
+    tone_button["command"] = lambda: handle_tone(mqtt_sender, tone_entry, tone_entry2)
+
+    return frame
+
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
@@ -220,7 +249,7 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     print('backward', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('backward', [left_entry_box.get(), right_entry_box.get()])
 
-def handle_left(left_entry_box, mqtt_sender):
+def handle_left(mqtt_sender, left_entry_box, right_entry_box):
     """
     Tells the robot to move using the speeds in the given entry boxes,
     but using the negative of the speed in the left entry box.
@@ -229,10 +258,10 @@ def handle_left(left_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('left', left_entry_box.get())
-    mqtt_sender.send_message('left', [left_entry_box.get()])
+    print('left')
+    mqtt_sender.send_message('left', [left_entry_box.get(), right_entry_box.get()])
 
-def handle_right(right_entry_box, mqtt_sender):
+def handle_right(mqtt_sender, left_entry_box, right_entry_box):
     """
     Tells the robot to move using the speeds in the given entry boxes,
     but using the negative of the speed in the right entry box.
@@ -241,8 +270,8 @@ def handle_right(right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('right', right_entry_box.get())
-    mqtt_sender.send_message('right', [right_entry_box.get()])
+    print('right')
+    mqtt_sender.send_message('right', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_stop(mqtt_sender):
     """
@@ -262,13 +291,15 @@ def handle_tone(mqtt_sender, tone_entry, tone_entry2):
     print('tone', int(tone_entry.get()), int(tone_entry2.get()))
     mqtt_sender.send_message('tone', [int(tone_entry.get()), int(tone_entry2.get())])
 
-def handle_go_straight_for_seconds(mqtt_sender, time_entry):
-    print('go straight for seconds')
-    mqtt_sender.send_message('go_straight_for_seconds', [int(time_entry.get())])
+def handle_go_straight_for_seconds(mqtt_sender, time):
 
-def handle_go_straight_for_inches(mqtt_sender, inches_entry):
-    print('go straight for inches')
-    mqtt_sender.send_message('go_straight_for_inches', [int(inches_entry.get())])
+    print('go straight for seconds', time)
+    mqtt_sender.send_message('go_straight_for_seconds', [int(time)])
+
+def handle_go_straight_for_inches(mqtt_sender, inches):
+
+    print('go straight for inches', inches)
+    mqtt_sender.send_message('go_straight_for_inches', [int(inches)])
 
 
 
