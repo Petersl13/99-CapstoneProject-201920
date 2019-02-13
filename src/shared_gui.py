@@ -145,7 +145,7 @@ def get_arm_frame(window, mqtt_sender):
     # Set the Button callbacks:
     raise_arm_button["command"] = lambda: handle_raise_arm(mqtt_sender)
     lower_arm_button["command"] = lambda: handle_lower_arm(mqtt_sender)
-    lower_warning_button["command"] = lambda: print('Must have calibrated arm before use of Lower Arm button!')
+    lower_warning_button["command"] = lambda: print('Must have calibrated arm before use of *Lower arm* button!')
     calibrate_arm_button["command"] = lambda: handle_calibrate_arm(mqtt_sender)
     move_arm_button["command"] = lambda: handle_move_arm_to_position(
         position_entry, mqtt_sender)
