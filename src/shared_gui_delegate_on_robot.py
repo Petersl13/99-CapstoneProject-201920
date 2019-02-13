@@ -51,9 +51,9 @@ class Handler(object):
         print('got lower arm')
         self.robot.arm_and_claw.lower_arm()
 
-    def move_arm_to_position(self):
+    def move_arm_to_position(self, n):
         print('got move arm to position')
-        self.robot.arm_and_claw.move_arm_to_position()
+        self.robot.arm_and_claw.move_arm_to_position(int(n))
 
 
 
