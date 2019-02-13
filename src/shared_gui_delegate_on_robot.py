@@ -78,7 +78,7 @@ class Handler(object):
     def tone(self, f, t):
 
         print('got tone')
-        self.robot.sound_system.tone_maker.tone(int(f), int(t)).wait()
+        self.robot.sound_system.tone_maker.play_tone(int(f), int(t)).wait()
 
     def phrase(self, p):
 
