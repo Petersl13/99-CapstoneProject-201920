@@ -62,12 +62,12 @@ class Handler(object):
     def tone(self, f, t):
 
         print('got tone')
-        self.robot.sound_system.tone_maker.tone(f, t).wait()
+        self.robot.sound_system.tone_maker.tone(int(f), int(t)).wait()
 
     def phrase(self, p):
 
         print('got phrase')
-        self.robot.sound_system.speech_maker.speak(p).wait()
+        self.robot.sound_system.speech_maker.speak(int(p)).wait()
 
     def go_striaght_for_seconds(self, seconds):
 

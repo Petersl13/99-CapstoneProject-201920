@@ -9,7 +9,6 @@ import rosebot
 import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot
-import shared_gui
 
 robot = rosebot.RoseBot()
 

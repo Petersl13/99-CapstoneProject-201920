@@ -94,14 +94,14 @@ def get_go_straight_frame(window, mqtt_sender):
     inches_label.grid(row= 1, column= 1)
     inches_entry.grid(row= 2, column = 1)
 
-    time_entry_button = ttk.Button(frame, text='time')
+    time_entry_button = ttk.Button(frame, text='Go for Time!')
     time_entry_button.grid(row=3, column=0)
 
-    inches_entry_button = ttk.Button(frame, text="inches")
+    inches_entry_button = ttk.Button(frame, text="Go for Inches!")
     inches_entry_button.grid(row= 3, column=1)
 
-    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry.get())
-    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry.get())
+    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry)
+    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry)
 
     return frame
 
@@ -258,7 +258,7 @@ def handle_left(mqtt_sender, left_entry_box, right_entry_box):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('left')
+    print('Left', int(left_entry_box.get()))
     mqtt_sender.send_message('left', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_right(mqtt_sender, left_entry_box, right_entry_box):
@@ -270,7 +270,7 @@ def handle_right(mqtt_sender, left_entry_box, right_entry_box):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('right')
+    print('Right', int(right_entry_box.get()))
     mqtt_sender.send_message('right', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_stop(mqtt_sender):
@@ -278,28 +278,28 @@ def handle_stop(mqtt_sender):
     Tells the robot to stop.
       :type  mqtt_sender:  com.MqttClient
     """
-    print('stop')
+    print('Stop')
     mqtt_sender.send_message('stop', [])
 
 def handle_beep(mqtt_sender, beep_entry):
 
-    print('beep', int(beep_entry.get()))
+    print('Beep', int(beep_entry.get()))
     mqtt_sender.send_message('beep', [beep_entry.get()])
 
 def handle_tone(mqtt_sender, tone_entry, tone_entry2):
 
-    print('tone', int(tone_entry.get()), int(tone_entry2.get()))
-    mqtt_sender.send_message('tone', [int(tone_entry.get()), int(tone_entry2.get())])
+    print('Tone', int(tone_entry.get()), int(tone_entry2.get()))
+    mqtt_sender.send_message('tone', [tone_entry.get(), tone_entry2.get()])
 
 def handle_go_straight_for_seconds(mqtt_sender, time):
 
-    print('go straight for seconds', time)
-    mqtt_sender.send_message('go_straight_for_seconds', [int(time)])
+    print('Straight for seconds', (time.get()))
+    mqtt_sender.send_message('go_straight_for_seconds', [time.get()])
 
 def handle_go_straight_for_inches(mqtt_sender, inches):
 
-    print('go straight for inches', inches)
-    mqtt_sender.send_message('go_straight_for_inches', [int(inches)])
+    print('Straight for inches', int(inches.get()))
+    mqtt_sender.send_message('go_straight_for_inches', [inches.get()])
 
 
 
@@ -346,7 +346,7 @@ def handle_quit(mqtt_sender):
     Tell the robot's program to stop its loop (and hence quit).
       :type  mqtt_sender:  com.MqttClient
     """
-    print('quit')
+    print('Quit')
     mqtt_sender.send_message('quit')
 
 def handle_exit(mqtt_sender):
@@ -355,6 +355,6 @@ def handle_exit(mqtt_sender):
     Then exit this program.
       :type mqtt_sender: com.MqttClient
     """
-    print('exit')
+    print('Exit')
     handle_quit(mqtt_sender)
     exit()
