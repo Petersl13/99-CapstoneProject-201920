@@ -41,9 +41,19 @@ class Handler(object):
 
     def raise_arm(self):
         print('got raise arm')
-        self.robot.raise_arm()
+        self.robot.arm_and_claw.raise_arm()
 
-    
+    def calibrate_arm(self):
+        print('got calibrate arm')
+        self.robot.arm_and_claw.calibrate_arm()
+
+    def lower_arm(self):
+        print('got lower arm')
+        self.robot.arm_and_claw.lower_arm()
+
+    def move_arm_to_position(self):
+        print('got move arm to position')
+        self.robot.arm_and_claw.move_arm_to_position()
 
 
 
