@@ -294,12 +294,12 @@ def handle_tone(mqtt_sender, tone_entry, tone_entry2):
 def handle_go_straight_for_seconds(mqtt_sender, time):
 
     print('Straight for seconds', (time.get()))
-    mqtt_sender.send_message('go_straight_for_seconds', [time.get()])
+    mqtt_sender.send_message('straight_for_seconds', [time.get()])
 
 def handle_go_straight_for_inches(mqtt_sender, inches):
 
     print('Straight for inches', int(inches.get()))
-    mqtt_sender.send_message('go_straight_for_inches', [inches.get()])
+    mqtt_sender.send_message('straight_for_inches', [inches.get()])
 
 
 
