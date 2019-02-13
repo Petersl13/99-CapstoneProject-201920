@@ -234,7 +234,7 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('forward', left_entry_box.get(), right_entry_box.get())
+    print('Forward:', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('forward', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
@@ -246,7 +246,7 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('backward', left_entry_box.get(), right_entry_box.get())
+    print('Backward:', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('backward', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_left(mqtt_sender, left_entry_box, right_entry_box):
@@ -258,7 +258,7 @@ def handle_left(mqtt_sender, left_entry_box, right_entry_box):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('Left', int(left_entry_box.get()))
+    print('Left:', int(left_entry_box.get()))
     mqtt_sender.send_message('left', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_right(mqtt_sender, left_entry_box, right_entry_box):
@@ -270,7 +270,7 @@ def handle_right(mqtt_sender, left_entry_box, right_entry_box):
       :type  mqtt_sender:      com.MqttClient
     """
 
-    print('Right', int(right_entry_box.get()))
+    print('Right:', int(right_entry_box.get()))
     mqtt_sender.send_message('right', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_stop(mqtt_sender):
@@ -283,22 +283,22 @@ def handle_stop(mqtt_sender):
 
 def handle_beep(mqtt_sender, beep_entry):
 
-    print('Beep', int(beep_entry.get()))
+    print('Beep:', int(beep_entry.get()))
     mqtt_sender.send_message('beep', [beep_entry.get()])
 
 def handle_tone(mqtt_sender, tone_entry, tone_entry2):
 
-    print('Tone', int(tone_entry.get()), int(tone_entry2.get()))
+    print('Tone:', int(tone_entry.get()), int(tone_entry2.get()))
     mqtt_sender.send_message('tone', [tone_entry.get(), tone_entry2.get()])
 
 def handle_go_straight_for_seconds(mqtt_sender, time):
 
-    print('Straight for seconds', (time.get()))
+    print('Straight for seconds:', (time.get()))
     mqtt_sender.send_message('straight_for_seconds', [time.get()])
 
 def handle_go_straight_for_inches(mqtt_sender, inches):
 
-    print('Straight for inches', int(inches.get()))
+    print('Straight for inches:', int(inches.get()))
     mqtt_sender.send_message('straight_for_inches', [inches.get()])
 
 
@@ -311,14 +311,16 @@ def handle_raise_arm(mqtt_sender):
     Tells the robot to raise its Arm until its touch sensor is pressed.
       :type  mqtt_sender:  com.MqttClient
     """
-
+    print('Raise Arm')
+    mqtt_sender.send_message('raise_arm', [])
 
 def handle_lower_arm(mqtt_sender):
     """
     Tells the robot to lower its Arm until it is all the way down.
       :type  mqtt_sender:  com.MqttClient
     """
-
+    print('Lower Arm')
+    mqtt_sender.send_message('lower_arm', [])
 
 def handle_calibrate_arm(mqtt_sender):
     """
@@ -327,7 +329,8 @@ def handle_calibrate_arm(mqtt_sender):
     all the way down, and then to mark taht position as position 0.
       :type  mqtt_sender:  com.MqttClient
     """
-
+    print('Calibrate Arm')
+    mqtt_sender.send_message('calibrate_arm', [])
 
 def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
     """
@@ -336,7 +339,8 @@ def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
       :type  arm_position_entry  ttk.Entry
       :type  mqtt_sender:        com.MqttClient
     """
-
+    print('Move arm to position:', int(arm_position_entry.get()))
+    mqtt_sender.send_message('arm_to_position', arm_position_entry.get())
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
