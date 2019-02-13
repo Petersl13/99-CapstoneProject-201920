@@ -6,6 +6,7 @@
     and Lara Peters and Nathalie Grier.
   Winter term, 2018-2019.
 """
+import rosebot
 class Handler(object):
     def __init__(self, robot):
         """
@@ -38,6 +39,11 @@ class Handler(object):
         left_wheel_speed = 0
         self.robot.drive_system.go(left_wheel_speed, int(right_wheel_speed))
 
+    def raise_arm(self):
+        print('got raise arm')
+        self.robot.raise_arm()
+
+    
 
 
 
@@ -78,6 +84,8 @@ class Handler(object):
 
         print('got straight for inches', inches)
         self.robot.drive_system.go_straight_for_inches(int(inches))
+
+
 
     print("I will beep N times")
     print('I will play tone at frequency F for the durration T')

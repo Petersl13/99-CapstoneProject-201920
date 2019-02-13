@@ -114,6 +114,7 @@ class DriveSystem(object):
         """
 
 
+
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
     # -------------------------------------------------------------------------
@@ -208,9 +209,13 @@ class DriveSystem(object):
     # -------------------------------------------------------------------------
     def display_camera_data(self):
         """
-        Displays on the GUI the Blob data of the Blob that the camera sees
+        Print on the console the Blob data of the Blob that the camera sees
         (if any).
         """
+        b = self.sensor_system.camera.get_biggest_blob()
+        print(b)
+
+
 
     def spin_clockwise_until_sees_object(self, speed, area):
         """
@@ -560,8 +565,10 @@ class InfraredProximitySensor(object):
         in inches, where about 39.37 inches (which is 100 cm) means no object
         is within its field of vision.
         """
-        inches_per_cm = 2.54
-        return 48 * inches_per_cm * self.get_distance() / 100
+        cm_per_inch = 2.54
+        distance = (48 / cm_per_inch) * self.get_distance() / 100
+        print(distance)
+        return distance
 
 
 ###############################################################################
