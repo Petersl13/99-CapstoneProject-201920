@@ -340,7 +340,7 @@ def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
       :type  mqtt_sender:        com.MqttClient
     """
     print('Move arm to position:', int(arm_position_entry.get()))
-    mqtt_sender.send_message('move_arm_to_position', arm_position_entry.get())
+    mqtt_sender.send_message('move_arm_to_position', [arm_position_entry.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
