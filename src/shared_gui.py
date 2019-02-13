@@ -80,25 +80,25 @@ def get_go_straight_frame(window, mqtt_sender):
     frame.grid()
     frame_label = ttk.Label(frame, text='Go Straight For...')
 
-    time_label = ttk.Label(frame, text='Time in Seconds')
+    time_label = ttk.Label(frame, text='Time in Seconds:')
     time_entry = ttk.Entry(frame, width=8)
 
-    inches_label = ttk.Label(frame, text='Inches')
+    inches_label = ttk.Label(frame, text='Inches:')
     inches_entry = ttk.Entry(frame, width=8)
 
-    frame_label.grid(row = 0, column = 0)
+    frame_label.grid(row = 0, column = 1)
 
     time_label.grid(row=1, column = 0)
     time_entry.grid(row=2, column = 0)
 
-    inches_label.grid(row= 1, column= 1)
-    inches_entry.grid(row= 2, column = 1)
+    inches_label.grid(row= 1, column= 2)
+    inches_entry.grid(row= 2, column = 2)
 
     time_entry_button = ttk.Button(frame, text='Go for Time!')
     time_entry_button.grid(row=3, column=0)
 
     inches_entry_button = ttk.Button(frame, text="Go for Inches!")
-    inches_entry_button.grid(row= 3, column=1)
+    inches_entry_button.grid(row= 3, column=2)
 
     time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry)
     inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry)
@@ -124,6 +124,7 @@ def get_arm_frame(window, mqtt_sender):
 
     raise_arm_button = ttk.Button(frame, text="Raise arm")
     lower_arm_button = ttk.Button(frame, text="Lower arm")
+    lower_warning_button = ttk.Button(frame, text='LOWER BUTTON WARNING')
     calibrate_arm_button = ttk.Button(frame, text="Calibrate arm")
     move_arm_button = ttk.Button(frame,
                                  text="Move arm to position (0 to 5112)")
@@ -138,11 +139,13 @@ def get_arm_frame(window, mqtt_sender):
     blank_label.grid(row=2, column=1)
     raise_arm_button.grid(row=3, column=0)
     lower_arm_button.grid(row=3, column=1)
+    lower_warning_button.grid(row=4, column=1)
     calibrate_arm_button.grid(row=3, column=2)
 
     # Set the Button callbacks:
     raise_arm_button["command"] = lambda: handle_raise_arm(mqtt_sender)
     lower_arm_button["command"] = lambda: handle_lower_arm(mqtt_sender)
+    lower_warning_button["command"] = lambda: print('Must have calibrated arm before use of Lower Arm button!')
     calibrate_arm_button["command"] = lambda: handle_calibrate_arm(mqtt_sender)
     move_arm_button["command"] = lambda: handle_move_arm_to_position(
         position_entry, mqtt_sender)
@@ -193,7 +196,7 @@ def beep_frame(window, mqtt_sender):
     beep_entry = ttk.Entry(frame, width=8)
     beep_label = ttk.Label(frame, text='Number of Beeps:')
     tone_entry = ttk.Entry(frame, width=8)
-    tone_label = ttk.Label(frame, text='Tone Frequency:')
+    tone_label = ttk.Label(frame, text='Tone Frequency (800 - 1000):')
     tone_entry2 = ttk.Entry(frame, width=8)
     tone_label2 = ttk.Label(frame, text='Tone Duration (milliseconds):')
 
@@ -283,12 +286,12 @@ def handle_stop(mqtt_sender):
 
 def handle_beep(mqtt_sender, beep_entry):
 
-    print('Beep:', int(beep_entry.get()))
+    print('Beep:', beep_entry.get())
     mqtt_sender.send_message('beep', [beep_entry.get()])
 
 def handle_tone(mqtt_sender, tone_entry, tone_entry2):
 
-    print('Tone:', int(tone_entry.get()), int(tone_entry2.get()))
+    print('Tone:', tone_entry.get(), tone_entry2.get())
     mqtt_sender.send_message('tone', [tone_entry.get(), tone_entry2.get()])
 
 def handle_go_straight_for_seconds(mqtt_sender, time):
@@ -298,7 +301,7 @@ def handle_go_straight_for_seconds(mqtt_sender, time):
 
 def handle_go_straight_for_inches(mqtt_sender, inches):
 
-    print('Straight for inches:', int(inches.get()))
+    print('Straight for inches:', inches.get())
     mqtt_sender.send_message('straight_for_inches', [inches.get()])
 
 

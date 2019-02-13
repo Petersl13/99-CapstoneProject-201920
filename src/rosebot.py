@@ -112,8 +112,11 @@ class DriveSystem(object):
         at the given speed for the given number of inches,
         using the encoder (degrees traveled sensor) built into the motors.
         """
-
-
+        while True:
+            self.go(speed, speed)
+            if self.right_motor.get_position() >= inches:
+                self.stop()
+                break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
@@ -286,11 +289,25 @@ class ArmAndClaw(object):
         Move its Arm to the given position, where 0 means all the way DOWN.
         The robot must have previously calibrated its Arm.
         """
-        self.motor.turn_on(100)
-        while True:
-            if abs(self.motor.get_position()) >= desired_arm_position:
-                self.motor.turn_off()
-                break
+        #This code previously was:
+        #self.motor.turn_on(100)
+        #while True:
+        #    if abs(self.motor.get_position()) >= desired_arm_position:
+        #        self.motor.turn_off()
+        #        break
+        #Not sure if the following is correct but makes sense:
+        if self.motor.get_position() < desired_arm_position:
+            self.motor.turn_on(100)
+            while True:
+                if abs(self.motor.get_position()) >= desired_arm_position:
+                    self.motor.turn_off()
+                    break
+        else:
+            self.motor.turn_on(-100)
+            while True:
+                if self.motor.get_position() <= desired_arm_position:
+                    self.motor.turn_off()
+                    break
 
     def lower_arm(self):
         """
