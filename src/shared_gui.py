@@ -423,12 +423,12 @@ def handle_intensity_greater(mqtt_sender, intensity, speed):
 def handle_color_is(mqtt_sender, color, speed):
 
     print('Color:', color.get(), 'At speed:', speed.get())
-    mqtt_sender.send_message('color_is', [color.get(), speed.get()])
+    mqtt_sender.send_message('go_straight_until_color_is', [color.get(), speed.get()])
 
 def handle_color_is_not(mqtt_sender, color, speed):
 
     print('Color:', color.get(), 'At speed', speed.get())
-    mqtt_sender.send_message('color_is_not', [color.get(), speed.get()])
+    mqtt_sender.send_message('go_straight_until_color_is_not', [color.get(), speed.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
