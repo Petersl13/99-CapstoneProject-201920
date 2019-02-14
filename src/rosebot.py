@@ -37,7 +37,7 @@ class RoseBot(object):
         self.arm_and_claw = ArmAndClaw(self.sensor_system.touch_sensor)
         self.beacon_system = BeaconSystem()
         self.display_system = DisplaySystem()
-
+        self.color_sensor = ColorSensor(1)
 
 ###############################################################################
 #    DriveSystem
