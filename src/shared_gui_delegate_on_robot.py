@@ -97,6 +97,6 @@ class Handler(object):
 
 
 
-    print("I will beep N times")
-    print('I will play tone at frequency F for the durration T')
-    print('I will speak phsrase P')
+    #print("I will beep N times")
+    #print('I will play tone at frequency F for the durration T')
+    #print('I will speak phsrase P')
