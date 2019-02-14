@@ -260,12 +260,12 @@ def handle_beep(mqtt_sender, beep_entry):
     print('beep', int(beep_entry.get()))
     mqtt_sender.send_message('beep', [beep_entry.get()])
 
-<<<<<<< Updated upstream
+
 def handle_tone(mqtt_sender, tone_entry, tone_entry2):
 
     print('tone', int(tone_entry.get()), int(tone_entry2.get()))
     mqtt_sender.send_message('tone', [int(tone_entry.get()), int(tone_entry2.get())])
-=======
+
 def handle_go_straight_for_seconds(mqtt_sender, time_entry):
     print('go straight for seconds')
     mqtt_sender.send_message('go_straight_for_seconds', [int(time_entry.get())])
@@ -274,7 +274,7 @@ def handle_go_straight_for_inches(mqtt_sender, inches_entry):
     print('go straight for inches')
     mqtt_sender.send_message('go_straight_for_inches', [int(inches_entry.get())])
 
->>>>>>> Stashed changes
+
 
 ###############################################################################
 # Handlers for Buttons in the ArmAndClaw frame.
