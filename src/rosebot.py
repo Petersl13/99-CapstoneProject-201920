@@ -283,7 +283,7 @@ class ArmAndClaw(object):
         self.raised_position = self.motor.get_position()
         self.motor.turn_on(-100)
         while True:
-            if abs(self.motor.get_position()) >= 14*360:
+            if abs(self.motor.get_position()) <= 14*360:
                 self.motor.turn_off()
                 break
         self.lowered_position = self.motor.get_position()

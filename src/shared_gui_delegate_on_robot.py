@@ -83,17 +83,17 @@ class Handler(object):
     def phrase(self, p):
 
         print('got phrase')
-        self.robot.sound_system.speech_maker.speak(int(p)).wait()
+        self.robot.sound_system.speech_maker.speak(str(p)).wait()
 
-    def striaght_for_seconds(self, seconds):
+    def striaght_for_seconds(self, seconds, speed):
 
-        print('got striaght for seconds', seconds)
-        self.robot.drive_system.go_straight_for_seconds(int(seconds))
+        print('got striaght for seconds', seconds, 'at speed', speed)
+        self.robot.drive_system.go_straight_for_seconds(int(seconds), int(speed))
 
-    def straight_for_inches(self, inches):
+    def straight_for_inches(self, inches, speed):
 
-        print('got straight for inches', inches)
-        self.robot.drive_system.go_straight_for_inches(int(inches))
+        print('got straight for inches', inches, 'at speed', speed)
+        self.robot.drive_system.go_straight_for_inches(int(inches), int(speed))
 
 
 

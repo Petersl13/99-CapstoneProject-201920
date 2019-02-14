@@ -86,6 +86,11 @@ def get_go_straight_frame(window, mqtt_sender):
     inches_label = ttk.Label(frame, text='Inches:')
     inches_entry = ttk.Entry(frame, width=8)
 
+    speed_entry = ttk.Entry(frame, width=8)
+    speed_label = ttk.Label(frame, text='Speed:')
+    speed_entry.grid(row=2, column=1)
+    speed_label.grid(row=1, column=1)
+
     frame_label.grid(row = 0, column = 1)
 
     time_label.grid(row=1, column = 0)
@@ -100,8 +105,8 @@ def get_go_straight_frame(window, mqtt_sender):
     inches_entry_button = ttk.Button(frame, text="Go for Inches!")
     inches_entry_button.grid(row= 3, column=2)
 
-    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry)
-    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry)
+    time_entry_button["command"] = lambda: handle_go_straight_for_seconds(mqtt_sender, time_entry, speed_entry)
+    inches_entry_button["command"] = lambda:  handle_go_straight_for_inches(mqtt_sender, inches_entry, speed_entry)
 
     return frame
 
@@ -124,7 +129,7 @@ def get_arm_frame(window, mqtt_sender):
 
     raise_arm_button = ttk.Button(frame, text="Raise arm")
     lower_arm_button = ttk.Button(frame, text="Lower arm")
-    lower_warning_button = ttk.Button(frame, text='LOWER BUTTON WARNING')
+    #lower_warning_button = ttk.Button(frame, text='LOWER BUTTON WARNING')
     calibrate_arm_button = ttk.Button(frame, text="Calibrate arm")
     move_arm_button = ttk.Button(frame,
                                  text="Move arm to position (0 to 5112)")
@@ -139,13 +144,13 @@ def get_arm_frame(window, mqtt_sender):
     blank_label.grid(row=2, column=1)
     raise_arm_button.grid(row=3, column=0)
     lower_arm_button.grid(row=3, column=1)
-    lower_warning_button.grid(row=4, column=1)
+    #lower_warning_button.grid(row=4, column=1)
     calibrate_arm_button.grid(row=3, column=2)
 
     # Set the Button callbacks:
     raise_arm_button["command"] = lambda: handle_raise_arm(mqtt_sender)
     lower_arm_button["command"] = lambda: handle_lower_arm(mqtt_sender)
-    lower_warning_button["command"] = lambda: print('Must have calibrated arm before use of *Lower arm* button!')
+    #lower_warning_button["command"] = lambda: print('Must have calibrated arm before use of *Lower arm* button!')
     calibrate_arm_button["command"] = lambda: handle_calibrate_arm(mqtt_sender)
     move_arm_button["command"] = lambda: handle_move_arm_to_position(
         position_entry, mqtt_sender)
@@ -190,7 +195,7 @@ def beep_frame(window, mqtt_sender):
     # Construct the frame to return:
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
-    frame_label = ttk.Label(frame, text="Beeps")
+    frame_label = ttk.Label(frame, text="Sound")
     frame_label.grid(row=0, column=1)
 
     beep_entry = ttk.Entry(frame, width=8)
@@ -199,9 +204,12 @@ def beep_frame(window, mqtt_sender):
     tone_label = ttk.Label(frame, text='Tone Frequency (800 - 1000):')
     tone_entry2 = ttk.Entry(frame, width=8)
     tone_label2 = ttk.Label(frame, text='Tone Duration (milliseconds):')
+    speak_entry = ttk.Entry(frame, width=8)
+    speak_label = ttk.Label(frame, text='What should I say?:')
 
     beep_button = ttk.Button(frame, text="Beep")
     tone_button = ttk.Button(frame, text="Tone")
+    speak_button = ttk.Button(frame, text='Speak')
 
     beep_button.grid(row=2, column=1)
     beep_entry.grid(row=2, column=0)
@@ -211,9 +219,13 @@ def beep_frame(window, mqtt_sender):
     tone_label.grid(row=3, column=0)
     tone_entry2.grid(row=4, column=1)
     tone_label2.grid(row=3, column=1)
+    speak_label.grid(row=5, column=0)
+    speak_entry.grid(row=6, column=0)
+    speak_button.grid(row=6, column=1)
 
     beep_button["command"] = lambda: handle_beep(mqtt_sender, beep_entry)
     tone_button["command"] = lambda: handle_tone(mqtt_sender, tone_entry, tone_entry2)
+    speak_button["command"] = lambda: handle_speak(mqtt_sender, speak_entry)
 
     return frame
 
@@ -294,15 +306,20 @@ def handle_tone(mqtt_sender, tone_entry, tone_entry2):
     print('Tone:', tone_entry.get(), tone_entry2.get())
     mqtt_sender.send_message('tone', [tone_entry.get(), tone_entry2.get()])
 
-def handle_go_straight_for_seconds(mqtt_sender, time):
+def handle_speak(mqtt_sender, speak_entry):
 
-    print('Straight for seconds:', (time.get()))
-    mqtt_sender.send_message('straight_for_seconds', [time.get()])
+    print('Speak:', speak_entry.get())
+    mqtt_sender.send_message('phrase', [speak_entry.get()])
 
-def handle_go_straight_for_inches(mqtt_sender, inches):
+def handle_go_straight_for_seconds(mqtt_sender, time, speed):
 
-    print('Straight for inches:', inches.get())
-    mqtt_sender.send_message('straight_for_inches', [inches.get()])
+    print('Straight for seconds:', time.get(), 'At speed:', speed.get())
+    mqtt_sender.send_message('straight_for_seconds', [time.get(), speed.get()])
+
+def handle_go_straight_for_inches(mqtt_sender, inches, speed):
+
+    print('Straight for inches:', inches.get(), 'At speed:', speed.get())
+    mqtt_sender.send_message('straight_for_inches', [inches.get(), speed.get()])
 
 
 
