@@ -95,6 +95,23 @@ class Handler(object):
         print('got straight for inches', inches, 'at speed', speed)
         self.robot.drive_system.go_straight_for_inches_using_time(int(inches), int(speed))
 
+    def go_straight_until_intensity_is_less_than(self, intensity, speed):
+        print('got intensity', intensity, 'at speed', speed)
+        self.robot.drive_system.go_straight_until_intensity_is_less_than(int(intensity), int(speed))
+
+    def go_straight_until_intensity_is_greater_than(self, intensity, speed):
+        print('got intensity', intensity, 'at speed', speed)
+        self.robot.drive_system.go_straight_until_intensity_is_greater_than(int(intensity), int(speed))
+
+    def go_straight_until_color_is(self, color, speed):
+        print('got straight until color is', color, 'at speed', speed)
+        self.robot.drive_system.go_straight_until_color_is( int(color), int(speed))
+
+    def go_straight_until_color_is_not(self, color, speed):
+        print('got straight until color is', color, 'at speed', speed)
+        self.robot.drive_system.go_straight_until_color_is_not(int(color), int(speed))
+        
+
 
 
     #print("I will beep N times")
