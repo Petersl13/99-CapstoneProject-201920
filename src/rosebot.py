@@ -127,12 +127,21 @@ class DriveSystem(object):
         Goes straight at the given speed until the intensity returned
         by the color_sensor is less than the given intensity.
         """
-
+        self.go(speed, speed)
+        while True:
+            if self.sensor_system.color_sensor.get_reflected_light_intensity() <= intensity:
+                self.stop()
+                break
     def go_straight_until_intensity_is_greater_than(self, intensity, speed):
         """
         Goes straight at the given speed until the intensity returned
         by the color_sensor is greater than the given intensity.
         """
+        self.go(speed, speed)
+        while True:
+            if self.sensor_system.color_sensor.get_reflected_light_intensity() >= intensity:
+                self.stop()
+                break
 
     def go_straight_until_color_is(self, color, speed):
         """
@@ -147,6 +156,7 @@ class DriveSystem(object):
         then use the   get_color_as_name   method to access
         the color sensor's color.
         """
+        
 
     def go_straight_until_color_is_not(self, color, speed):
         """
@@ -502,7 +512,6 @@ class ColorSensor(object):
         but in practice more like 3 to 90+ in our classroom lighting with our
         downward-facing sensor that is about 0.25 inches from the ground.
         """
-
         return self._color_sensor.reflected_light_intensity
 
     def get_ambient_light_intensity(self):
