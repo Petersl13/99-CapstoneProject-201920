@@ -44,7 +44,7 @@ def main():
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
 
-    teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame = get_shared_frames(main_frame, mqtt_sender)
+    teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame = get_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -55,7 +55,7 @@ def main():
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame)
+    grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -71,17 +71,17 @@ def get_shared_frames(main_frame, mqtt_sender):
     control_frame = shared_gui.get_control_frame(main_frame, mqtt_sender)
     go_straight_frame = shared_gui.get_go_straight_frame(main_frame, mqtt_sender)
     beep_frame = shared_gui.beep_frame(main_frame, mqtt_sender)
+    color_frame = shared_gui.colors(main_frame, mqtt_sender)
+    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame
 
-    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame
-
-def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame):
 
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     go_straight_frame.grid(row=1, column=1)
     beep_frame.grid(row=0, column=1)
-
+    color_frame.grid(row=2, column=1)
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

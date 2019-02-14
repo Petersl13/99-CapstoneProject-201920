@@ -229,6 +229,53 @@ def beep_frame(window, mqtt_sender):
 
     return frame
 
+def colors(window, mqtt_sender):
+    """
+            Constructs and returns a frame on the given window, where the frame has
+            Button objects to exit this program and/or the robot's program (via MQTT).
+              :type  window:       ttk.Frame | ttk.Toplevel
+              :type  mqtt_sender:  com.MqttClient
+            """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+    frame_label = ttk.Label(frame, text="Colors!")
+    frame_label.grid(row=0, column=0)
+
+    speed_label = ttk.Label(frame, text='Speed:')
+    speed_entry = ttk.Entry(frame, width=8)
+    speed_label.grid(row=0, column=2)
+    speed_entry.grid(row=1, column=2)
+
+    go_to_intensityl_button = ttk.Button(frame, text='Go Until Intensity Less')
+    intensity_entry = ttk.Entry(frame, width=8)
+    intensity_label = ttk.Label(frame, text='Intensity:')
+
+    go_to_intensityl_button.grid(row=2, column=0)
+    intensity_label.grid(row=1, column=1)
+    intensity_entry.grid(row=2, column=1)
+
+    go_to_intensityl_button["command"] = lambda: handle_intensity(mqtt_sender, intensity_entry, speed_entry)
+
+    go_to_intensityg_button = ttk.Button(frame, text='Go Until Intensity Greater')
+    go_to_intensityg_button.grid(row=2, column=2)
+    go_to_intensityg_button["command"] = lambda: handle_intensity_greater(mqtt_sender, intensity_entry, speed_entry)
+
+
+    color_entry = ttk.Entry(frame, width=8)
+    color_label = ttk.Label(frame, text='Color (int 1-7):')
+    color_is_button = ttk.Button(frame, text='Color is?')
+    color_is_not_button = ttk.Button(frame, text='Color is not?')
+
+    color_entry.grid(row=4, column=1)
+    color_label.grid(row=3, column=1)
+    color_is_button.grid(row=4, column=0)
+    color_is_not_button.grid(row=4, column=2)
+
+    color_is_button["command"] = lambda: handle_color_is(mqtt_sender, color_entry, speed_entry)
+    color_is_not_button["command"] = lambda: handle_color_is_not(mqtt_sender, color_entry, speed_entry)
+
+    return frame
 
 ###############################################################################
 ###############################################################################
@@ -361,6 +408,27 @@ def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
     """
     print('Move arm to position:', int(arm_position_entry.get()))
     mqtt_sender.send_message('move_arm_to_position', [arm_position_entry.get()])
+
+
+def handle_intensity(mqtt_sender, intensity, speed):
+
+    print('Intensity:', intensity.get(), 'At speed:', speed.get())
+    mqtt_sender.send_message('go_straight_until_intensity_is_less_than', [intensity.get(), speed.get()])
+
+def handle_intensity_greater(mqtt_sender, intensity, speed):
+
+    print('Intensity:', intensity, 'At speed:', speed.get())
+    mqtt_sender.send_message('go_straight_until_is_greater_than', [intensity.get(), speed.get()])
+
+def handle_color_is(mqtt_sender, color, speed):
+
+    print('Color:', color.get(), 'At speed:', speed.get())
+    mqtt_sender.send_message('color_is', [color.get(), speed.get()])
+
+def handle_color_is_not(mqtt_sender, color, speed):
+
+    print('Color:', color.get(), 'At speed', speed.get())
+    mqtt_sender.send_message('color_is_not', [color.get(), speed.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
