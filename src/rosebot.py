@@ -256,15 +256,21 @@ class ArmAndClaw(object):
         """
         self.touch_sensor = touch_sensor
         self.motor = Motor('A', motor_type='medium')
-        self.raised_position = 0
-        self.lowered_position = 0
+        #self.raised_position = 0
+        #self.lowered_position = 0
+
     def raise_arm(self):
         """ Raises the Arm until its touch sensor is pressed. """
-        self.motor.turn_on(100)
-        while True:
-            if self.touch_sensor.is_pressed():
-                self.motor.turn_off()
-                break
+        if self.touch_sensor.is_pressed():
+            self.motor.turn_off()
+        else:
+            self.motor.turn_on(100)
+            while True:
+                if self.touch_sensor.is_pressed():
+                    self.raised_position = self.motor.get_position()
+                    self.motor.turn_off()
+                    break
+
     def calibrate_arm(self):
         """
         Calibrates its Arm, that is:
@@ -275,15 +281,17 @@ class ArmAndClaw(object):
           3. Resets the motor's position to 0.
         """
 
-        self.motor.reset_position()
+        #self.motor.reset_position()
         self.raise_arm()
-        self.raised_position = self.motor.get_position()
+        #self.raised_position = self.motor.get_position()
         self.motor.turn_on(-100)
         while True:
             if abs(self.motor.get_position()) >= 14*360:
                 self.motor.turn_off()
                 break
         self.lowered_position = self.motor.get_position()
+        self.motor.reset_position()
+
     def move_arm_to_position(self, desired_arm_position):
         """
         Move its Arm to the given position, where 0 means all the way DOWN.
