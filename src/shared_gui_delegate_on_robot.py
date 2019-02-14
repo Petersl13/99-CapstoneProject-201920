@@ -105,8 +105,9 @@ class Handler(object):
         
     def go_straight_until_color_is(self, color, speed):
         print('got straight until color is', color, 'at speed', speed)
-        self.robot.drive_system.go_straight_until_color_is( int(color), int(speed))
-        
+        self.robot.drive_system.go_straight_until_color_is(int(color), int(speed))
+
+
     def go_straight_until_color_is_not(self, color, speed):
         print('got straight until color is', color, 'at speed', speed)
         self.robot.drive_system.go_straight_until_color_is_not(int(color), int(speed))
