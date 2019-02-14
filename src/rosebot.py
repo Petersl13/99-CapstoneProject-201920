@@ -256,20 +256,17 @@ class ArmAndClaw(object):
         """
         self.touch_sensor = touch_sensor
         self.motor = Motor('A', motor_type='medium')
-        #self.raised_position = 0
-        #self.lowered_position = 0
+        self.raised_position = 0
+        self.lowered_position = 0
 
     def raise_arm(self):
         """ Raises the Arm until its touch sensor is pressed. """
-        if self.touch_sensor.is_pressed():
-            self.motor.turn_off()
-        else:
-            self.motor.turn_on(100)
-            while True:
-                if self.touch_sensor.is_pressed():
-                    self.raised_position = self.motor.get_position()
-                    self.motor.turn_off()
-                    break
+        self.motor.turn_on(100)
+        while True:
+            if self.touch_sensor.is_pressed():
+                self.motor.turn_off()
+                break
+        self.raised_position = self.motor.get_position()
 
     def calibrate_arm(self):
         """
@@ -281,16 +278,15 @@ class ArmAndClaw(object):
           3. Resets the motor's position to 0.
         """
 
-        #self.motor.reset_position()
+        self.motor.reset_position()
         self.raise_arm()
-        #self.raised_position = self.motor.get_position()
+        self.raised_position = self.motor.get_position()
         self.motor.turn_on(-100)
         while True:
             if abs(self.motor.get_position()) >= 14*360:
                 self.motor.turn_off()
                 break
         self.lowered_position = self.motor.get_position()
-        self.motor.reset_position()
 
     def move_arm_to_position(self, desired_arm_position):
         """
@@ -324,7 +320,7 @@ class ArmAndClaw(object):
         """
         self.motor.turn_on(-100)
         while True:
-            if abs(self.motor.get_position()) >= self.lowered_position():
+            if abs(self.motor.get_position()) >= self.lowered_position:
                 self.motor.turn_off()
                 break
 
@@ -504,6 +500,7 @@ class ColorSensor(object):
         but in practice more like 3 to 90+ in our classroom lighting with our
         downward-facing sensor that is about 0.25 inches from the ground.
         """
+
         return self._color_sensor.reflected_light_intensity
 
     def get_ambient_light_intensity(self):
