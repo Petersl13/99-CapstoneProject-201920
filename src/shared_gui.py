@@ -263,7 +263,7 @@ def colors(window, mqtt_sender):
 
 
     color_entry = ttk.Entry(frame, width=8)
-    color_label = ttk.Label(frame, text='Color (int 1-7):')
+    color_label = ttk.Label(frame, text='Color (int 0-7):')
     color_is_button = ttk.Button(frame, text='Color is?')
     color_is_not_button = ttk.Button(frame, text='Color is not?')
 
@@ -274,6 +274,47 @@ def colors(window, mqtt_sender):
 
     color_is_button["command"] = lambda: handle_color_is(mqtt_sender, color_entry, speed_entry)
     color_is_not_button["command"] = lambda: handle_color_is_not(mqtt_sender, color_entry, speed_entry)
+
+    return frame
+
+def go_straight_until_frame(window, mqtt_sender):
+    """
+                Constructs and returns a frame on the given window, where the frame has
+                Button objects to exit this program and/or the robot's program (via MQTT).
+                  :type  window:       ttk.Frame | ttk.Toplevel
+                  :type  mqtt_sender:  com.MqttClient
+                """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+    frame_label = ttk.Label(frame, text="Proximity Sensor")
+    frame_label.grid(row=0, column=1)
+
+    speed_label = ttk.Label(frame, text='Speed:')
+    speed_entry = ttk.Entry(frame, width=8)
+    speed_label.grid(row=3, column=0)
+    speed_entry.grid(row=4, column=0)
+
+    distance_entry = ttk.Entry(frame, width=8)
+    distance_label = ttk.Label(frame, text='Distance (inches):')
+    distance_entry.grid(row=2, column=1)
+    distance_label.grid(row=1, column=1)
+
+    delta_entry = ttk.Entry(frame, width=8)
+    delta_label = ttk.Label(frame, text='Delta (inches):')
+    delta_entry.grid(row=4, column=2)
+    delta_label.grid(row=3, column=2)
+
+    until_distance_less_button = ttk.Button(frame, text='Go Forward (Until Less)')
+    until_distance_greater_button = ttk.Button(frame, text='Go Backward (Until Greater)')
+    until_distance_less_button.grid(row=2, column=0)
+    until_distance_greater_button.grid(row=2, column=2)
+    until_delta_button = ttk.Button(frame, text='Go Until Delta')
+    until_delta_button.grid(row=3, column=1)
+
+    until_distance_less_button["command"] = lambda: handle_distance_less(mqtt_sender, distance_entry, speed_entry)
+    until_distance_greater_button["command"] = lambda: handle_distance_greater(mqtt_sender, distance_entry, speed_entry)
+    until_delta_button["command"] = lambda: handle_delta_button(mqtt_sender, delta_entry, distance_entry, speed_entry)
 
     return frame
 
@@ -418,7 +459,7 @@ def handle_intensity(mqtt_sender, intensity, speed):
 def handle_intensity_greater(mqtt_sender, intensity, speed):
 
     print('Intensity:', intensity, 'At speed:', speed.get())
-    mqtt_sender.send_message('go_straight_until_is_greater_than', [intensity.get(), speed.get()])
+    mqtt_sender.send_message('go_straight_until_intensity_is_greater_than', [intensity.get(), speed.get()])
 
 def handle_color_is(mqtt_sender, color, speed):
 
@@ -429,6 +470,21 @@ def handle_color_is_not(mqtt_sender, color, speed):
 
     print('Color:', color.get(), 'At speed', speed.get())
     mqtt_sender.send_message('go_straight_until_color_is_not', [color.get(), speed.get()])
+
+def handle_distance_less(mqtt_sender, inches, speed):
+
+    print('Distance:', inches.get(), 'At speed', speed.get())
+    mqtt_sender.send_message('go_forward_until_distance_is_less_than', [inches.get(), speed.get()])
+
+def handle_distance_greater(mqtt_sender, inches, speed):
+
+    print('Distance:', inches.get(), 'At speed', speed.get())
+    mqtt_sender.send_message('go_forward_until_distance_is_greater_than', [inches.get(), speed.get()])
+
+def handle_delta_button(mqtt_sender, delta, inches, speed):
+
+    print('Distance:', inches.get(), 'At speed', speed.get(), 'Within Distance:', delta)
+    mqtt_sender.send_message('go_until_distance_is_within', [delta.get(), inches.get(), speed.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.

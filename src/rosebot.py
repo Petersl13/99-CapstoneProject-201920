@@ -185,7 +185,7 @@ class DriveSystem(object):
         """
         self.go(speed, speed)
         while True:
-            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < inches:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() <= inches:
                 self.stop()
                 break
     def go_backward_until_distance_is_greater_than(self, inches, speed):
@@ -196,7 +196,7 @@ class DriveSystem(object):
         """
         self.go(-speed, -speed)
         while True:
-            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() > inches:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= inches:
                 self.stop()
                 break
 
@@ -211,6 +211,9 @@ class DriveSystem(object):
         from the object.
         """
         self.go(speed,speed)
+        while True:
+            if self.sensor_system.ir_proximity_sensor.get_distance() == inches + delta or inches - delta:
+                break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.

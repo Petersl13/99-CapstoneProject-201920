@@ -120,6 +120,9 @@ class Handler(object):
         print('got backward until distance is greater than', inches, 'at speed', speed)
         self.robot.drive_system.go_backward_until_distance_is_greater_than(int(inches), int(speed))
 
+    def go_until_distance_is_within(self, delta, inches, speed):
+        print('got go distance until delta', delta, inches, speed)
+        self.robot.drive_system.go_until_distance_is_within(int(delta), int(inches), int(speed))
 
     #print("I will beep N times")
     #print('I will play tone at frequency F for the durration T')
