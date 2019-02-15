@@ -112,6 +112,13 @@ class Handler(object):
         print('got straight until color is', color, 'at speed', speed)
         self.robot.drive_system.go_straight_until_color_is_not(int(color), int(speed))
 
+    def go_forward_until_distance_is_less_than(self, inches, speed):
+        print('got straight until distance is less than', inches, 'at speed', speed)
+        self.robot.drive_system.go_forward_until_distance_is_less_than(int(inches), int(speed))
+
+    def go_backward_until_distance_is_greater_than(self, inches, speed):
+        print('got backward until distance is greater than', inches, 'at speed', speed)
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(int(inches), int(speed))
 
 
     #print("I will beep N times")

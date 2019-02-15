@@ -254,6 +254,7 @@ class DriveSystem(object):
         of the trained color whose area is at least the given area.
         Requires that the user train the camera on the color of the object.
         """
+        
 
     def spin_counterclockwise_until_sees_object(self, speed, area):
         """
