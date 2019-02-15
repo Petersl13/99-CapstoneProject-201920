@@ -479,7 +479,7 @@ def handle_distance_less(mqtt_sender, inches, speed):
 def handle_distance_greater(mqtt_sender, inches, speed):
 
     print('Distance:', inches.get(), 'At speed', speed.get())
-    mqtt_sender.send_message('go_forward_until_distance_is_greater_than', [inches.get(), speed.get()])
+    mqtt_sender.send_message('go_backward_until_distance_is_greater_than', [inches.get(), speed.get()])
 
 def handle_delta_button(mqtt_sender, delta, inches, speed):
 
