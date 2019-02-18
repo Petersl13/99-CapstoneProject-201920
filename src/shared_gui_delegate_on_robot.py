@@ -124,6 +124,11 @@ class Handler(object):
         print('got go distance until delta', delta, inches, speed)
         self.robot.drive_system.go_until_distance_is_within(int(delta), int(inches), int(speed))
 
-    #print("I will beep N times")
-    #print('I will play tone at frequency F for the durration T')
-    #print('I will speak phsrase P')
+    def spin_clockwise_until_sees_object(self, speed, area):
+        print('got clockwise until sees object bigger than', area, 'at speed', speed)
+        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed), int(area))
+
+    def spin_counterclockwise_until_sees_object(self, speed, area):
+        print('got counterclockwise until sees object bigger than', area, 'at speed', speed)
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed) , int(area))
+
