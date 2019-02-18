@@ -354,7 +354,7 @@ def camera_sensor_window(window, mqtt_sender):
     spin_counterclockwise_button["command"] = lambda: handle_counterclockwise(mqtt_sender, speed_entry, area_entry)
     
     feature_10_button = ttk.Button(frame, text='Feature 10')
-    feature_10_button["command"] = lambda: handle_feature_10(mqtt_sender, speed_entry)
+    feature_10_button["command"] = lambda: handle_feature_10(mqtt_sender, speed_entry, area_entry)
     feature_10_button.grid(row=3, column=1)
 
     return frame
@@ -542,10 +542,10 @@ def handle_beeps_more(mqtt_sender, speed):
     print('Beeps more at speed:', speed)
     mqtt_sender.send_message('sound_as_approaches', [speed.get()])
 
-def handle_feature_10(mqtt_sender, speed):
+def handle_feature_10(mqtt_sender, speed, area):
 
     print('Spin until, then forward at speed:', speed.get())
-    mqtt_sender.send_message('spin_then_straight', [speed.get()])
+    mqtt_sender.send_message('spin_then_straight', [speed.get(), area.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
