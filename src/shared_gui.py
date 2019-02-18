@@ -318,6 +318,39 @@ def go_straight_until_frame(window, mqtt_sender):
 
     return frame
 
+def camera_sensor_window(window, mqtt_sender):
+    """
+            Constructs and returns a frame on the given window, where the frame has
+            Button objects to exit this program and/or the robot's program (via MQTT).
+              :type  window:       ttk.Frame | ttk.Toplevel
+              :type  mqtt_sender:  com.MqttClient
+            """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+    frame_label = ttk.Label(frame, text="Camera")
+    frame_label.grid(row=1, column=0)
+
+    speed_label = ttk.Label(frame, text='Speed:')
+    speed_entry = ttk.Entry(frame, width=8)
+    speed_label.grid(row=1, column=0)
+    speed_entry.grid(row=2, column=0)
+
+    area_label = ttk.Label(frame, text='Area:')
+    area_entry = ttk.Entry(frame, width=8)
+    area_label.grid(row=1, column=1)
+    area_entry.grid(row=2, column=1)
+
+    spin_clockwise_button = ttk.Button(frame, text='Spin Clockwise')
+    spin_counterclockwise_button = ttk.Button(frame, text='Spin Counterclockwise')
+    spin_clockwise_button.grid(row=1, column=2)
+    spin_counterclockwise_button.grid(row=2, column=2)
+
+    spin_clockwise_button["command"] = lambda: handle_clockwise(mqtt_sender, speed_entry, area_entry)
+    spin_counterclockwise_button["command"] = lambda: handle_counterclockwise(mqtt_sender, speed_entry, area_entry)
+
+    return frame
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
@@ -485,6 +518,15 @@ def handle_delta_button(mqtt_sender, delta, inches, speed):
 
     print('Distance:', inches.get(), 'At speed', speed.get(), 'Within Distance:', delta)
     mqtt_sender.send_message('go_until_distance_is_within', [delta.get(), inches.get(), speed.get()])
+
+def handle_clockwise(mqtt_sender, speed, area):
+
+    print('Spin Clockwise at speed:', speed.get(), 'Until area:', area.get())
+    mqtt_sender.send_message('spin_clockwise_until_sees_object', [speed.get(), area.get()])
+
+def handle_counterclockwise(mqtt_sender, speed, area):
+    print('Spin Counterclockwise at speed:', speed.get(), 'Until area:', area.get())
+    mqtt_sender.send_message('spin_counterclockwise_until_sees_object', [speed.get(), area.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.

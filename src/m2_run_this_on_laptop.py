@@ -44,7 +44,7 @@ def main():
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
 
-    teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight = get_shared_frames(main_frame, mqtt_sender)
+    teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame = get_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -55,7 +55,7 @@ def main():
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight)
+    grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -73,9 +73,10 @@ def get_shared_frames(main_frame, mqtt_sender):
     beep_frame = shared_gui.beep_frame(main_frame, mqtt_sender)
     color_frame = shared_gui.colors(main_frame, mqtt_sender)
     go_straight = shared_gui.go_straight_until_frame(main_frame, mqtt_sender)
-    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight
+    camera_frame = shared_gui.camera_sensor_window(main_frame, mqtt_sender)
+    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame
 
-def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight):
+def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame):
 
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
@@ -84,6 +85,7 @@ def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_
     beep_frame.grid(row=2, column=0)
     color_frame.grid(row=3, column=0)
     go_straight.grid(row=1, column=1)
+    camera_frame.grid(row=2, column=1)
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
