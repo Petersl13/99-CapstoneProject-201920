@@ -337,8 +337,7 @@ def handle_exit(mqtt_sender):
 
 
 
-
- if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < inches - delta:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < inches - delta:
                 self.go(-speed, -speed)
                 if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= inches- delta:
                     self.stop()
