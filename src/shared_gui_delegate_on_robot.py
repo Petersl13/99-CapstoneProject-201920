@@ -7,6 +7,7 @@
   Winter term, 2018-2019.
 """
 import rosebot
+import m1_extra
 class Handler(object):
     def __init__(self, robot):
         """
@@ -131,4 +132,9 @@ class Handler(object):
     def spin_counterclockwise_until_sees_object(self, speed, area):
         print('got counterclockwise until sees object bigger than', area, 'at speed', speed)
         self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed) , int(area))
+
+    def sound_as_approaches(robot,speed):
+        print('got sound as approaches at speed', speed)
+        m1_extra.sound_as_approaches(robot, speed)
+        
 

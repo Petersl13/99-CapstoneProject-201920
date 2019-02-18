@@ -223,7 +223,7 @@ class DriveSystem(object):
         start_time = 1.5
         touch_sensor = TouchSensor(1)
         self.arm_and_claw = ArmAndClaw(touch_sensor)
-        beeper = Beeper()
+        self.beeper = Beeper()
         distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
         self.go(speed, speed)
         while True:
