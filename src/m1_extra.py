@@ -1,5 +1,6 @@
 
 import rosebot
+import time
 
 def sound_as_approaches(robot,speed):
 
@@ -9,10 +10,13 @@ def sound_as_approaches(robot,speed):
     robot.drive_system.go(speed, speed)
     while True:
         beeper.beep().wait()
+        time.sleep(start_time)
         d_2 = robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
         if d_2 < distance:
             distance = d_2
             start_time = start_time - 0.2
+            if start_time < .1:
+                start_time = .1
         if d_2 > distance:
             distance = d_2
             start_time = start_time + 0.2
