@@ -25,6 +25,6 @@ def sound_as_approaches(robot,speed):
             robot.arm_and_claw.raise_arm()
             break
 
-def spin_then_straight(robot, speed):
-    robot.drive_system.spin_clockwise_until_sees_object(speed)
+def spin_then_straight(robot, speed, area):
+    robot.drive_system.spin_clockwise_until_sees_object(speed, area)
     sound_as_approaches(robot, speed)
