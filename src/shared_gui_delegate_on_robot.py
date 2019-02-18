@@ -133,8 +133,8 @@ class Handler(object):
         print('got counterclockwise until sees object bigger than', area, 'at speed', speed)
         self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed) , int(area))
 
-    def sound_as_approaches(robot,speed):
+    def sound_as_approaches(self,speed):
         print('got sound as approaches at speed', speed)
-        m1_extra.sound_as_approaches(robot, speed)
+        m1_extra.sound_as_approaches(self.robot, speed)
         
 

@@ -316,6 +316,10 @@ def go_straight_until_frame(window, mqtt_sender):
     until_distance_greater_button["command"] = lambda: handle_distance_greater(mqtt_sender, distance_entry, speed_entry)
     until_delta_button["command"] = lambda: handle_delta_button(mqtt_sender, delta_entry, distance_entry, speed_entry)
 
+    beeps_more_button = ttk.Button(frame, text='Beep More Until')
+    beeps_more_button.grid(row=5, column=1)
+    beeps_more_button["command"] = lambda: handle_beeps_more(mqtt_sender, speed_entry)
+
     return frame
 
 def camera_sensor_window(window, mqtt_sender):
@@ -525,8 +529,14 @@ def handle_clockwise(mqtt_sender, speed, area):
     mqtt_sender.send_message('spin_clockwise_until_sees_object', [speed.get(), area.get()])
 
 def handle_counterclockwise(mqtt_sender, speed, area):
+
     print('Spin Counterclockwise at speed:', speed.get(), 'Until area:', area.get())
     mqtt_sender.send_message('spin_counterclockwise_until_sees_object', [speed.get(), area.get()])
+
+def handle_beeps_more(mqtt_sender, speed):
+
+    print('Beeps more at speed:', speed)
+    mqtt_sender.send_message('sound_as_approaches', [speed.get()])
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
