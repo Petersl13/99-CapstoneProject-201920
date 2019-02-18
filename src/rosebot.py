@@ -196,6 +196,7 @@ class DriveSystem(object):
         """
         self.go(-speed, -speed)
         while True:
+            time.sleep(0.05)
             if abs(self.sensor_system.ir_proximity_sensor.get_distance_in_inches()) >= inches:
                 self.stop()
                 break
@@ -218,6 +219,27 @@ class DriveSystem(object):
             if abs(self.sensor_system.ir_proximity_sensor.get_distance()) >= inches - delta:
                 self.stop()
                 break
+    def sound_as_approaches(self, speed):
+        start_time = 1.5
+        touch_sensor = TouchSensor(1)
+        self.arm_and_claw = ArmAndClaw(touch_sensor)
+        beeper = Beeper()
+        distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+        self.go(speed, speed)
+        while True:
+            beeper.beep()
+            d_2 = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            if d_2 < distance:
+                distance = d_2
+                start_time = start_time -0.2
+            if d_2 > distance:
+                distance = d_2
+                start_time = start_time + 0.2
+            if d_2 <= 0.2:
+                self.stop()
+
+                self.arm_and_claw.raise_arm()
+
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.
