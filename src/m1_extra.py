@@ -20,7 +20,7 @@ def sound_as_approaches(robot,speed):
         if d_2 > distance:
             distance = d_2
             start_time = start_time + 0.2
-        if d_2 <= 0.1:
+        if d_2 <= 0.05:
             robot.drive_system.stop()
             robot.arm_and_claw.raise_arm()
             break
