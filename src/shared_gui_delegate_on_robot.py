@@ -136,5 +136,9 @@ class Handler(object):
     def sound_as_approaches(self,speed):
         print('got sound as approaches at speed', speed)
         m1_extra.sound_as_approaches(self.robot, speed)
+
         
+    def spin_then_straight(self, speed):
+        print('got spin then straight at speed', speed)
+        m1_extra.spin_then_straight(self.robot, speed)
 
