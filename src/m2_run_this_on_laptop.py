@@ -12,6 +12,7 @@ import tkinter
 from tkinter import ttk
 import shared_gui
 import m2_sprint_3
+import rosebot
 
 def main():
     """
@@ -153,7 +154,6 @@ def handle_trick_1(mqtt_sender, speed):
 
     print('Got Trick 1 at speed:', speed.get())
     mqtt_sender.send_message('trick_1_m2', [speed.get()])
-
 
 def handle_trick_2(mqtt_sender, speed):
     print('Got Trick 2 at speed:', speed.get())

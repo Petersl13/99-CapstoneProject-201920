@@ -6,11 +6,11 @@ def sprint3(robot, speed):
 
     robot.drive_system.go(speed, speed)
     while True:
-        if robot.color_system.get_color() == 4: #yellow
+        if robot.color_system.get_color() == 4:
             robot.drive_system.stop()
             trick_1(robot, speed)
             break
-        if robot.color_system.get_color() == 2: #blue
+        if robot.color_system.get_color() == 2:
             robot.drive_system.stop()
             trick_2(robot, speed)
             break
@@ -19,17 +19,17 @@ def sprint3(robot, speed):
             bark(robot)
             break
 
-def trick_1(robot, speed): #spin
+def trick_1(robot, speed):
 
-    robot.drive_system.spin_clockwise_until_sees_area(speed, 2) #train to block/me
+    robot.drive_system.spin_clockwise_until_sees_object(speed, 2)
     bark(robot)
-    robot.drive_system.spin_counterclockwise_until_sees_area(speed, 2)
+    robot.drive_system.spin_counterclockwise_until_sees_object(speed, 2)
     bark(robot)
-    robot.drive_system.spin_clockwise_until_sees_area(speed, 2)
+    robot.drive_system.spin_clockwise_until_sees_object(speed, 2)
 
 def trick_2(robot, speed):
 
-    robot.drive_system.spin_clockwise_until_sees_area(speed, 2)
+    robot.drive_system.spin_clockwise_until_sees_object(speed, 2)
     robot.arm_and_claw.calibrate_arm()
     position = robot.proximity_sensor.get_distance_in_inches()
     robot.drive_system.go(speed, speed)
@@ -44,5 +44,5 @@ def trick_2(robot, speed):
 
 def bark(robot):
 
-    robot.speech_maker('bark')
-    robot.speech_maker('bark')
+    robot.speech_maker('got it')
+    robot.speech_maker('got it')

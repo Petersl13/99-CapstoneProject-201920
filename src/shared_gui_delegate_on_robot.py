@@ -145,16 +145,16 @@ class Handler(object):
 
     def sprint_3(self, speed):
         print('Got sprint 3 from m2', speed)
-        m2_sprint_3.sprint3(self, int(speed))
+        m2_sprint_3.sprint3(self.robot, int(speed))
 
     def bark_m2(self):
         print('Got bark from m2')
-        m2_sprint_3.bark(self)
+        m2_sprint_3.bark(self.robot)
 
     def trick_1_m2(self, speed):
         print('Got trick 1 from m2')
-        m2_sprint_3.trick_1(self, int(speed))
+        m2_sprint_3.trick_1(self.robot, int(speed))
 
     def trick_2_m2(self, speed):
         print('Got trick 2 from m2')
-        m2_sprint_3.trick_2(self, int(speed))
+        m2_sprint_3.trick_2(self.robot, int(speed))
