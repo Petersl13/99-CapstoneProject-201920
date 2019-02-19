@@ -31,7 +31,7 @@ def main():
     # -------------------------------------------------------------------------
 
     root = tkinter.Tk()
-    root.title('CSSE 120 Capstone Project, Winter 2018-19')
+    root.title('CSSE 120 Nathalie Grier, Winter 2018-19')
 
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
@@ -44,7 +44,8 @@ def main():
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
 
-    teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame = get_shared_frames(main_frame, mqtt_sender)
+    #teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3 = get_shared_frames(main_frame, mqtt_sender)
+    sprint_3 = new_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -55,13 +56,30 @@ def main():
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame)
+    #grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3)
+    new_grid_frames(sprint_3)
 
     # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
 
     root.mainloop()
+
+def sprint_3_nathalie(window, mqtt_sender):
+    """
+        Constructs and returns a frame on the given window, where the frame
+        has Entry and Button objects that control the EV3 robot's Arm
+        by passing messages using the given MQTT Sender.
+          :type  window:       ttk.Frame | ttk.Toplevel
+          :type  mqtt_sender:  com.MqttClient
+        """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief='ridge')
+    frame.grid()
+    frame_label = ttk.Label(frame, text='Sprint 3')
+    frame_label.grid(row=0, column=0)
+
+    return frame
 
 
 def get_shared_frames(main_frame, mqtt_sender):
@@ -74,9 +92,16 @@ def get_shared_frames(main_frame, mqtt_sender):
     color_frame = shared_gui.colors(main_frame, mqtt_sender)
     go_straight = shared_gui.go_straight_until_frame(main_frame, mqtt_sender)
     camera_frame = shared_gui.camera_sensor_window(main_frame, mqtt_sender)
-    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame
+    sprint_3 = sprint_3_nathalie(main_frame, mqtt_sender)
+    return teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3
 
-def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame):
+def new_shared_frames(main_frame, mqtt_sender):
+
+    sprint_3 = sprint_3_nathalie(main_frame, mqtt_sender)
+
+    return sprint_3
+
+def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3):
 
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
@@ -86,7 +111,11 @@ def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_
     color_frame.grid(row=3, column=0)
     go_straight.grid(row=1, column=1)
     camera_frame.grid(row=2, column=1)
+    sprint_3.grid(row=0, column=0)
 
+def new_grid_frames(sprint_3):
+
+    sprint_3.grid(row=0, column=0)
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------

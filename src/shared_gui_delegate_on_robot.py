@@ -8,6 +8,7 @@
 """
 import rosebot
 import m1_extra
+import m2_sprint_3
 class Handler(object):
     def __init__(self, robot):
         """
