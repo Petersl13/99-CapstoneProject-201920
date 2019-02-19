@@ -11,7 +11,7 @@ import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
 import shared_gui
-
+import m2_sprint_3
 
 def main():
     """
@@ -31,7 +31,7 @@ def main():
     # -------------------------------------------------------------------------
 
     root = tkinter.Tk()
-    root.title('CSSE 120 Nathalie Grier, Winter 2018-19')
+    root.title('CSSE 120, Nathalie Grier, Winter 2018-19')
 
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
@@ -45,7 +45,7 @@ def main():
     # -------------------------------------------------------------------------
 
     #teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3 = get_shared_frames(main_frame, mqtt_sender)
-    sprint_3 = new_shared_frames(main_frame, mqtt_sender)
+    sprint_3, control_frame = new_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -57,7 +57,7 @@ def main():
     # -------------------------------------------------------------------------
 
     #grid_frames(teleop_frame, arm_fram, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3)
-    new_grid_frames(sprint_3)
+    new_grid_frames(sprint_3, control_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -76,8 +76,28 @@ def sprint_3_nathalie(window, mqtt_sender):
     # Construct the frame to return:
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief='ridge')
     frame.grid()
-    frame_label = ttk.Label(frame, text='Sprint 3')
-    frame_label.grid(row=0, column=0)
+    frame_label = ttk.Label(frame, text='Sprint 3 Nathalie')
+    frame_label.grid(row=0, column=1)
+
+    sprint_3_button = ttk.Button(frame, text='Sprint 3')
+    sprint_3_button.grid(row=2, column=0)
+    sprint_3_button["command"] = lambda: handle_sprint_3(mqtt_sender, speed_entry)
+
+    speed_entry = ttk.Entry(frame, width=8)
+    speed_label = ttk.Label(frame, text='Speed:')
+    speed_entry.grid(row=2, column=1)
+    speed_label.grid(row=1, column=1)
+
+    bark_button = ttk.Button(frame, text='Bark!')
+    bark_button.grid(row=2, column=2)
+    bark_button["command"] = lambda: handle_bark(mqtt_sender)
+
+    trick_1_button = ttk.Button(frame, text='Trick 1')
+    trick_2_button = ttk.Button(frame, text='Trick 2')
+    trick_1_button.grid(row=3, column=0)
+    trick_2_button.grid(row=3, column=2)
+    trick_1_button["command"] = lambda: handle_trick_1(mqtt_sender, speed_entry)
+    trick_2_button["command"] = lambda: handle_trick_2(mqtt_sender, speed_entry)
 
     return frame
 
@@ -98,8 +118,9 @@ def get_shared_frames(main_frame, mqtt_sender):
 def new_shared_frames(main_frame, mqtt_sender):
 
     sprint_3 = sprint_3_nathalie(main_frame, mqtt_sender)
+    control_frame = shared_gui.get_control_frame(main_frame, mqtt_sender)
 
-    return sprint_3
+    return sprint_3, control_frame
 
 def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_frame, color_frame, go_straight, camera_frame, sprint_3):
 
@@ -113,9 +134,31 @@ def grid_frames(teleop_frame, arm_frame, control_frame, go_straight_frame, beep_
     camera_frame.grid(row=2, column=1)
     sprint_3.grid(row=0, column=0)
 
-def new_grid_frames(sprint_3):
+def new_grid_frames(sprint_3, control_frame):
 
     sprint_3.grid(row=0, column=0)
+    control_frame.grid(row=1, column=0)
+
+def handle_sprint_3(mqtt_sender, speed):
+
+    print('Got sprint 3, speed:', speed.get())
+    mqtt_sender.send_message('sprint_3', [speed.get()])
+
+def handle_bark(mqtt_sender):
+
+    print('Got bark')
+    mqtt_sender.send_message('bark_m2')
+
+def handle_trick_1(mqtt_sender, speed):
+
+    print('Got Trick 1 at speed:', speed.get())
+    mqtt_sender.send_message('trick_1_m2', [speed.get()])
+
+
+def handle_trick_2(mqtt_sender, speed):
+    print('Got Trick 2 at speed:', speed.get())
+    mqtt_sender.send_message('trick_2_m2', [speed.get()])
+
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
