@@ -82,26 +82,26 @@ def sprint_3_lara(window, mqtt_sender):
     frame_label.grid(row=0, column=0)
 
     warm_up_button = ttk.Button(frame, text='Warm-up')
-    warm_up_button.grid(row=3, column=0)
+    warm_up_button.grid(row=1, column=0)
     warm_up_button['command'] = lambda: handle_warm_up(mqtt_sender)
 
     speed_entry = ttk.Entry(frame, width=10)
     speed_label = ttk.Label(frame, text='Speed:')
-    speed_entry.grid(row=2, column =1)
-    speed_label.grid(row=1, column=1)
+    speed_entry.grid(row=1, column =2)
+    speed_label.grid(row=0, column=2)
 
     area_label = ttk.Label(frame, text='Area(smaller than football area):')
-    area_label.grid(row=1, column=3)
+    area_label.grid(row=2, column=2)
     area_entry = ttk.Entry(frame, width=10)
-    area_entry.grid(row=2, column=3)
+    area_entry.grid(row=3, column=2)
 
 
     spin_button = ttk.Button(frame, text='Take field')
-    spin_button.grid(row=3, column=2)
+    spin_button.grid(row=1, column=3)
     spin_button['command'] = lambda: handle_spin(mqtt_sender, speed_entry,area_entry)
 
     defender_button = ttk.Button(frame, text="Defender!")
-    defender_button.grid(row=4, column = 2)
+    defender_button.grid(row=3, column = 0)
     defender_button['command'] = lambda: handle_defender(mqtt_sender,speed_entry)
 
 

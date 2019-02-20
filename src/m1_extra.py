@@ -44,5 +44,15 @@ def go_out_of_bounds(robot, left_speed, right_speed, shared_speed, intensity):
     robot.drive_system.go(left_speed, right_speed)
     robot.drive_system.go_straight_until_intensity_is_less_than(intensity, shared_speed)
 
+def score(robot, speed):
+    robot.drive_system.go(speed)
+    #while True:
+    robot.drive_system.go_straight_until_intensity_is_greater_than(90)
+    robot.drive_system.stop()
+    robot.sound_system.speech_maker.speak('Touchdown!')
+    robot.lower_arm()
+            #break
+
+
 
 
