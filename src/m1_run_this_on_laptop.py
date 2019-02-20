@@ -106,7 +106,11 @@ def sprint_3_lara(window, mqtt_sender):
 
     out_of_bounds_button = ttk.Button(frame, text='Out of bounds')
     out_of_bounds_button.grid(row=3, column=3)
-    out_of_bounds_button['command'] = lambda: handle_out_of_bounds(mqtt_sender, )
+    out_of_bounds_button['command'] = lambda: handle_out_of_bounds(mqtt_sender, speed_entry)
+
+    score_button = ttk.Button(frame, text='Score!')
+    score_button.grid(row=4, column=2)
+    score_button['command'] = lambda: handle_score(mqtt_sender, speed_entry)
 
 
     return frame
@@ -169,7 +173,9 @@ def handle_out_of_bounds(mqtt_sender, speed):
     print('got out of bounds')
     mqtt_sender.send_message('out of bounds', [speed.get()])
 
-
+def handle_score(mqtt_sender, speed):
+    print('got score')
+    mqtt_sender.send_message('score!', [speed.get()])
 
 
 # -----------------------------------------------------------------------------
