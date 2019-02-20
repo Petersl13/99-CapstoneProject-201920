@@ -6,22 +6,16 @@ def sprint3(robot, speed):
 
     robot.drive_system.go(speed, speed)
     while True:
-        color = robot.color_sensor.get_color()
-        if color == 4:
+
+        color = robot.sensor_system.color_sensor.get_color()
+        if color == 6:
             robot.drive_system.stop()
             trick_1(robot, speed)
             break
-        if color == 2:
+        if color == 3:
             robot.drive_system.stop()
             trick_2(robot, speed)
             break
-        if robot.proximity_sensor.get_distance_in_inches() <= 5:
-            robot.drive_system.stop()
-            bark(robot)
-            break
-        #if time.time() >= 10:
-        #    robot.drive_system.stop()
-        #    break
 
 def trick_1(robot, speed):
 
