@@ -173,6 +173,10 @@ class Handler(object):
         print('got go straight until defender from m1_extra')
         m1_extra.go_forward_until_defender(self, speed)
 
+    def go_out_of_bounds(self, speed):
+        print('got go out of bounds from m1_extra')
+        m1_extra.go_out_of_bounds(self, speed)
+
     def score(self,speed):
         print('got score from m1_extra')
         m1_extra.score(self, speed)

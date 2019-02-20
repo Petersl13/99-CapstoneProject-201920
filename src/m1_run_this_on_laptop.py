@@ -104,6 +104,10 @@ def sprint_3_lara(window, mqtt_sender):
     defender_button.grid(row=3, column = 0)
     defender_button['command'] = lambda: handle_defender(mqtt_sender,speed_entry)
 
+    out_of_bounds_button = ttk.Button(frame, text='Out of bounds')
+    out_of_bounds_button.grid(row=3, column=3)
+    out_of_bounds_button['command'] = lambda: handle_out_of_bounds(mqtt_sender, )
+
 
     return frame
 
@@ -157,9 +161,16 @@ def handle_spin(mqtt_sender, speed, area):
     print('got spin at speed', speed.get(), 'until I see football bigger than', area.get(),'then go at speed', speed,'until I pick up the ball')
     mqtt_sender.send_message('spin', [speed.get()])
 
-def handle_defender(mqtt_sender, speed,):
+def handle_defender(mqtt_sender, speed):
     print('got forward at speed', speed.get(),'until defender is there')
     mqtt_sender.send_message('go until defender', [speed.get()])
+
+def handle_out_of_bounds(mqtt_sender, speed):
+    print('got out of bounds')
+    mqtt_sender.send_message('out of bounds', [speed.get()])
+
+
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
