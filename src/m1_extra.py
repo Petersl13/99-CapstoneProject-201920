@@ -36,21 +36,11 @@ def spin_then_straight(robot, speed, area):
     robot.drive_system.spin_clockwise_until_sees_object(speed, area)
     sound_as_approaches(robot, speed)
 
-def go_forward_until_defender(robot, speed):
-    robot.drive_system.go_forward_until_distance_is_less_than(3, speed)
-    robot.drive_system.go_backward_until_distance_is_greater_than(5, speed)
-    robot.drive_system.go(speed, -speed)
-    time.sleep(.05)
 
-#def go_out_of_bounds(robot, shared_speed):
-    #robot.drive_system.go(60, 30)
-    #robot.drive_system.go_straight_until_intensity_is_less_than(3, shared_speed)
 
 def score(robot, speed):
-    robot.drive_system.go(speed, speed)
     #while True:
-    robot.drive_system.go_straight_until_intensity_is_greater_than(90)
-    robot.drive_system.stop()
+    robot.drive_system.go_straight_until_intensity_is_greater_than(85, speed)
     robot.sound_system.speech_maker.speak('Touchdown!')
     robot.arm_and_claw.lower_arm()
             #break
