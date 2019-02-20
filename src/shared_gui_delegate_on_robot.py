@@ -159,7 +159,6 @@ class Handler(object):
         print('Got trick 2 from m2')
 
         m2_sprint_3.trick_2(self.robot, int(speed))
-        m2_sprint_3.trick_2(self, int(speed))
 
 
 #Lara's code
