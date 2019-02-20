@@ -29,8 +29,8 @@ def sound_as_approaches(robot,speed):
             break
 
 def warm_up(robot):
-    robot.calibrate_arm()
-    robot.speech_maker.speak('It is game time!')
+    robot.arm_and_claw.calibrate_arm()
+    robot.sound_system.speech_maker.speak('It is game time!')
 
 def spin_then_straight(robot, speed, area):
     robot.drive_system.spin_clockwise_until_sees_object(speed, area)
@@ -50,7 +50,7 @@ def score(robot, speed):
     robot.drive_system.go_straight_until_intensity_is_greater_than(90)
     robot.drive_system.stop()
     robot.sound_system.speech_maker.speak('Touchdown!')
-    robot.lower_arm()
+    robot.arm_and_claw.lower_arm()
             #break
 
 

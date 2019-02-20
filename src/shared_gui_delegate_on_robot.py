@@ -163,20 +163,20 @@ class Handler(object):
 
     def warm_up(self):
         print('Got warm up from m1_extra')
-        m1_extra.warm_up(self)
+        m1_extra.warm_up(self.robot)
 
     def spin(self, speed, area):
         print('Got spin from m1_extra')
-        m1_extra.spin_then_straight(self, speed, area)
+        m1_extra.spin_then_straight(self.robot, speed, area)
 
     def go_until_defender(self, speed):
         print('got go straight until defender from m1_extra')
-        m1_extra.go_forward_until_defender(self, speed)
+        m1_extra.go_forward_until_defender(self.robot, speed)
 
     def go_out_of_bounds(self, speed):
         print('got go out of bounds from m1_extra')
-        m1_extra.go_out_of_bounds(self, speed)
+        m1_extra.go_out_of_bounds(self.robot, speed)
 
     def score(self,speed):
         print('got score from m1_extra')
-        m1_extra.score(self, speed)
+        m1_extra.score(self.robot, speed)
