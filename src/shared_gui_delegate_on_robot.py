@@ -171,7 +171,7 @@ class Handler(object):
         m1_extra.spin_then_straight(self.robot, int(speed), int(area))
 
     def go_until_defender(self, speed):
-        print('got go straight until defender from m1_extra')
+        print('got go forward until defender from m1_extra')
         m1_extra.go_forward_until_defender(self.robot, int(speed))
 
     #def go_out_of_bounds(self, speed):
