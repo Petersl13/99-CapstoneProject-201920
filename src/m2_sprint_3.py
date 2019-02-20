@@ -6,11 +6,12 @@ def sprint3(robot, speed):
 
     robot.drive_system.go(speed, speed)
     while True:
-        if robot.color_sensor.get_color() == int(4):
+        color = robot.color_sensor.get_color()
+        if color == 4:
             robot.drive_system.stop()
             trick_1(robot, speed)
             break
-        if robot.color_sensor.get_color() == int(2):
+        if color == 2:
             robot.drive_system.stop()
             trick_2(robot, speed)
             break
