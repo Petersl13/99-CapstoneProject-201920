@@ -168,3 +168,7 @@ class Handler(object):
     def spin(self, speed, area):
         print('Got spin from m1_extra')
         m1_extra.spin_then_straight(self, speed, area)
+
+    def go_until_defender(self, speed):
+        print('got go straight until defender from m1_extra')
+        m1_extra.go_forward_until_defender(self, speed)

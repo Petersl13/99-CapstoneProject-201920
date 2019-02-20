@@ -30,15 +30,15 @@ def sound_as_approaches(robot,speed):
 
 def warm_up(robot):
     robot.calibrate_arm()
-    robot.speech_maker('It is game time!')
+    robot.speech_maker.speak('It is game time!')
 
 def spin_then_straight(robot, speed, area):
     robot.drive_system.spin_clockwise_until_sees_object(speed, area)
     sound_as_approaches(robot, speed)
 
-def go_forward_until_defender(robot, speed, inches_1, inches_2):
-    robot.drive_system.go_forward_until_distance_is_less_than(inches_1, speed)
-    robot.drive_system.go_backward_until_distance_is_greater_than(inches_2, speed)
+def go_forward_until_defender(robot, speed):
+    robot.drive_system.go_forward_until_distance_is_less_than(4, speed)
+    robot.drive_system.go_backward_until_distance_is_greater_than(6, speed)
 
 def go_out_of_bounds(robot, left_speed, right_speed, shared_speed, intensity):
     robot.drive_system.go(left_speed, right_speed)
