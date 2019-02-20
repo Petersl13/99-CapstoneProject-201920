@@ -45,7 +45,7 @@ def go_out_of_bounds(robot, shared_speed):
     robot.drive_system.go_straight_until_intensity_is_less_than(3, shared_speed)
 
 def score(robot, speed):
-    robot.drive_system.go(speed)
+    robot.drive_system.go(speed, speed)
     #while True:
     robot.drive_system.go_straight_until_intensity_is_greater_than(90)
     robot.drive_system.stop()

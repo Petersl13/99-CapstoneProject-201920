@@ -98,7 +98,7 @@ def sprint_3_lara(window, mqtt_sender):
 
     spin_button = ttk.Button(frame, text='Take field')
     spin_button.grid(row=1, column=3)
-    spin_button['command'] = lambda: handle_spin(mqtt_sender, speed_entry,area_entry)
+    spin_button['command'] = lambda: handle_spin_then_straight(mqtt_sender, speed_entry, area_entry)
 
     defender_button = ttk.Button(frame, text="Defender!")
     defender_button.grid(row=3, column = 0)
@@ -161,21 +161,21 @@ def handle_warm_up(mqtt_sender):
     print('got warm up')
     mqtt_sender.send_message('warm_up')
 
-def handle_spin(mqtt_sender, speed, area):
+def handle_spin_then_straight(mqtt_sender, speed, area):
     print('got spin at speed', speed.get(), 'until I see football bigger than', area.get(),'then go at speed', speed,'until I pick up the ball')
-    mqtt_sender.send_message('spin', [speed.get()])
+    mqtt_sender.send_message('spin', [speed.get()], [area.get()])
 
 def handle_defender(mqtt_sender, speed):
     print('got forward at speed', speed.get(),'until defender is there')
-    mqtt_sender.send_message('go until defender', [speed.get()])
+    mqtt_sender.send_message('go_until_defender', [speed.get()])
 
 def handle_out_of_bounds(mqtt_sender, speed):
     print('got out of bounds')
-    mqtt_sender.send_message('out of bounds', [speed.get()])
+    mqtt_sender.send_message('go_out_of_bounds', [speed.get()])
 
 def handle_score(mqtt_sender, speed):
     print('got score')
-    mqtt_sender.send_message('score!', [speed.get()])
+    mqtt_sender.send_message('score', [speed.get()])
 
 
 # -----------------------------------------------------------------------------
