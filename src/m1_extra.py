@@ -37,12 +37,14 @@ def spin_then_straight(robot, speed, area):
     sound_as_approaches(robot, speed)
 
 def go_forward_until_defender(robot, speed):
-    robot.drive_system.go_forward_until_distance_is_less_than(4, speed)
-    robot.drive_system.go_backward_until_distance_is_greater_than(6, speed)
+    robot.drive_system.go_forward_until_distance_is_less_than(3, speed)
+    robot.drive_system.go_backward_until_distance_is_greater_than(5, speed)
+    robot.drive_system.go(speed, -speed)
+    time.sleep(.05)
 
-def go_out_of_bounds(robot, shared_speed):
-    robot.drive_system.go(60, 50)
-    robot.drive_system.go_straight_until_intensity_is_less_than(3, shared_speed)
+#def go_out_of_bounds(robot, shared_speed):
+    #robot.drive_system.go(60, 30)
+    #robot.drive_system.go_straight_until_intensity_is_less_than(3, shared_speed)
 
 def score(robot, speed):
     robot.drive_system.go(speed, speed)
