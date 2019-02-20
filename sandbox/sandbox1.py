@@ -348,3 +348,13 @@ def go(self, speed, inches, delta):
                 if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() <= inches + delta:
                     self.stop()
                     break
+
+
+def warm_up(self):
+    print('Got warm up from m1_extra')
+    m1_extra.warm_up(self)
+
+
+def spin(self, speed, area):
+    print('Got spin from m1_extra')
+    m1_extra.spin_then_straight(self, speed, area)
